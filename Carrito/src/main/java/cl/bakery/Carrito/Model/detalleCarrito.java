@@ -1,7 +1,6 @@
 package cl.bakery.Carrito.Model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -14,31 +13,34 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name="Carrito")
+@Table(name="detalleCarrito")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Todos los productos registrados en la empresa")
 
-public class carrito {
+public class detalleCarrito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CARRITO")
+    @Column(name = "ID_DETALLE_CARRITO")
+    private Long idDetalleCarrito;
+
+    @Column(name = "ID_CARRITO", nullable = false)
     private Long idCarrito;
 
-    @Column(name = "ID_USUARIO", nullable = false)
-    private Long idUsuario;
+    @Column(name = "ID_PRODUCTO", nullable = false)
+    private Long idProducto;
 
-    @Column(name = "FECHA_CREACION", nullable = false)
-    private LocalDateTime fechaCreacion;
+    @Column(name = "CANTIDAD", nullable = false)
+    private Integer cantidad;
 
-    @Column(name = "TOTAL", nullable = false)
-    private BigDecimal total;
+    @Column(name = "PRECIO_UNITARIO", nullable = false)
+    private BigDecimal precioUnitario;
 
-    @Column(name = "ESTADO", nullable = false, length = 20)
-    private String estado;
-    
+    @Column(name = "SUBTOTAL", nullable = false)
+    private BigDecimal subtotal;
 
 }

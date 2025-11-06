@@ -1,4 +1,4 @@
-package cl.bakery.Pedidos.Config;
+package cl.bakery.Pagos.Config;
 
 
 import org.springframework.context.annotation.Bean;
