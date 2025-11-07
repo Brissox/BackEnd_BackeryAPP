@@ -14,8 +14,8 @@ public class pedidoModelAssembler implements RepresentationModelAssembler<pedido
         return EntityModel.of(
             p,
             linkTo(methodOn(pedidoController.class).BuscarPedido(p.getId_pedido())).withRel("LINKS"),
-            linkTo(methodOn(pedidoController.class).ListarPedidos()).withRel("todos-los-pedidos"),
-            linkTo(methodOn(pedidoController.class).ActualizarPedido(p.getId_pedido(), p)).withRel("actualiza-un-pedido")
+            linkTo(methodOn(pedidoController.class).ListarPedidos()).withRel("todos-los-pedidos")
+           // linkTo(methodOn(pedidoController.class).ActualizarPedido(p.getId_pedido(), p)).withRel("actualiza-un-pedido")
         );
     }
     

@@ -1,5 +1,6 @@
 package cl.bakery.Pedidos.Model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,46 +14,35 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Entity
-@Table(name="PEDIDOS")
+@Table(name = "PEDIDOS")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description="Todos los pedidos registrados en la empresa")
+@Schema(description = "Todos los pedidos registrados en la empresa")
 
 public class pedido {
 
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "ID_PEDIDO")
-    @Schema(description="identificador de pedido", example= "1")
-    private long id_pedido;
-    
-    @Column(name = "fecha_pedido",nullable= false)
-    @Schema(description="fecha en que se realiza el pedido", example= "")
-    private LocalDateTime fecha_pedido;
+    @Column(name = "ID_PEDIDO")
+    @Schema(description = "Identificador del pedido", example = "1")
+    private Long id_pedido;
 
-    @Column(name = "subtotal",nullable= false , precision = 10)
-    @Schema(description="suma parcial de valores", example="10000")
-    private Long subtotal;
+    @Column(name = "FECHA", nullable = false)
+    @Schema(description = "Fecha en que se realizó el pedido", example = "2025-11-07")
+    private LocalDate fecha;
 
-    @Column(name = "metodo_pago",nullable= false , length=20)
-    @Schema(description="metodo con el cual se realizara el pago", example="debito,credito,efetctivo")
-    private String metodo_pago;
+    @Column(name = "CLIENTE", nullable = false, length = 100)
+    @Schema(description = "Nombre o identificador del cliente que realizó el pedido", example = "Juan Pérez")
+    private String cliente;
 
-    @Column(name = "direccion_envio",nullable= true , length=100)
-    @Schema(description="direccion donde se enviara el pedido",example="siempre viva 123")
-    private String direccion_envio;
-    
-    @Column(name = "estado",nullable= false)
-    @Schema(description="estado en que se encuentra el pedido", example="A=Activo / I=Inactivo")
-    private String estado;
+    @Column(name = "VENDEDOR", nullable = false, length = 100)
+    @Schema(description = "Nombre o identificador del vendedor asociado al pedido", example = "María González")
+    private String vendedor;
 
-    @Column(name = "id_usuario",nullable= false, length=10)
-    @Schema(description="identificador de usuario dueno del pedido", example="1")
-    private Long id_usuario;
+    @Column(name = "MONTO", nullable = false, precision = 10)
+    @Schema(description = "Monto total del pedido en moneda local", example = "12500")
+    private Long monto;
 
-    
 }
