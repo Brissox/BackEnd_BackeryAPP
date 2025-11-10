@@ -1,6 +1,5 @@
 package cl.bakery.Carrito.Model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="Carrito")
+@Table(name="CARRITO")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,19 +25,25 @@ public class carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CARRITO")
-    private Long idCarrito;
+    @Schema(description = "Identificador del carrito de compras", example = "1")
+    private Long id_carrito;
 
     @Column(name = "ID_USUARIO", nullable = false)
-    private Long idUsuario;
+    @Schema(description = "Identificador del usuario propietario del carrito", example = "5")
+    private Long id_usuario;
 
     @Column(name = "FECHA_CREACION", nullable = false)
-    private LocalDateTime fechaCreacion;
+    @Schema(description = "Fecha en que se creó el carrito", example = "2025-11-07")
+    private LocalDateTime fecha_creacion;
 
-    @Column(name = "TOTAL", nullable = false)
-    private BigDecimal total;
+    @Column(name = "TOTAL", nullable = false, precision = 10)
+    @Schema(description = "Monto total acumulado en el carrito", example = "45990")
+    private Long total;
 
-    @Column(name = "ESTADO", nullable = false, length = 20)
+    @Column(name = "ESTADO", nullable = false, length = 1)
+    @Schema(description = "Estado del carrito (A=Activo / I=Inactivo / P=Pagado)", example = "A")
     private String estado;
+
     
 
 }
