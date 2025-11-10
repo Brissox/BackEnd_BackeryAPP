@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="USUARIOS")
+@Table(name="USUARIO")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,13 +22,13 @@ import lombok.NoArgsConstructor;
 
 public class usuario {
 
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "ID_USUARIO")
     @Schema(description="identificador del usuario", example="1")
     private long id_usuario;
 
-    @Column(name= "id_rol", nullable=false)
+    @Column(name= "ID_ROL", nullable=false)
     @Schema(description="identificador del rol del usuario", example="1")
     private long id_rol;
 
@@ -36,11 +36,11 @@ public class usuario {
     @Schema(description="nombre del usuario",example="Juan")
     private String nombre;
 
-    @Column(name= "apellido_paterno",nullable= false , length = 30)
+    @Column(name= "APELLIDO_PATERNO",nullable= false , length = 30)
     @Schema(description="Apellido paterno del usuario", example="Perez")
     private String apellido_paterno;
 
-    @Column(name= "apellido_materno",nullable= true , length = 30)
+    @Column(name= "APELLIDO_MATERNO",nullable= true , length = 30)
     @Schema(description="Apellido materno del usuario", example="Rojas")
     private String apellido_materno;
 
@@ -52,7 +52,7 @@ public class usuario {
     @Schema(description="Direccion del domicilio del usuario", example="inglaterra 123")
     private String direccion;
 
-    @Column(name= "fecha_nacimiento",nullable= true)
+    @Column(name= "FECHA_NACIMIENTO",nullable= true)
     @Schema(description="Fecha de nacimiento", example="DD-MM-YYYY")
     private Date fecha_nacimiento;
 
@@ -64,15 +64,15 @@ public class usuario {
     @Schema(description="Contrasena del usuario", example="xxxxxxxxxxxx")
     private String contrasena;
 
-    @Column(name = "run",nullable= false , length = 9)
+    @Column(name = "RUN",nullable= false , length = 9)
     @Schema(description="rol unico natural del usuario sin digito verificador ni puntos",example="11222333")
     private int run;
 
-    @Column(name = "dv",nullable= false , length = 1)
+    @Column(name = "DV",nullable= false , length = 1)
     @Schema(description="digito verificador del run", example="k")
     private String dv;
 
-    @Column(name = "Estado",nullable= false , length = 1)
+    @Column(name = "ESTADO",nullable= false , length = 1)
     @Schema(description="estado del usuario",example="A=Activo / I=Inactivo")
     private String estado;
 

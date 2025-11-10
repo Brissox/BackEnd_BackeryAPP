@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import cl.bakery.Productos.Assembler.productoModelAssembler;
 import cl.bakery.Productos.Model.producto;
@@ -25,6 +27,9 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+
+@RestController
+@RequestMapping("/api/v1/Productos")
 public class productoController {
 
 
@@ -37,7 +42,7 @@ public class productoController {
 
 //  ENDPOINT PARA BUSCAR TODOS LOS PRODUCTOS
     @GetMapping
-    @Operation(summary = "PRODUCTOS", description = "Operacion que lista todos los productos")
+    @Operation(summary = "PRODUCTO", description = "Operacion que lista todos los productos")
     @ApiResponses (value = {
         @ApiResponse(responseCode = "200", description = "Se listaron correctamente los productos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = producto.class))), 
         @ApiResponse(responseCode = "404", description = "No se encontro ninguna producto", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se encuentran Datos")))
@@ -120,7 +125,6 @@ public class productoController {
             productoActualizado.setPrecio(productoActualizar.getPrecio());
             productoActualizado.setSku(productoActualizar.getSku());
             productoActualizado.setDescripcion(productoActualizar.getDescripcion());
-            productoActualizado.setMarca(productoActualizar.getMarca());
             productoActualizado.setEstado(productoActualizar.getEstado());
             productoService.GuardarProducto(productoActualizado);
             return ResponseEntity.ok(assembler.toModel(productoActualizar));

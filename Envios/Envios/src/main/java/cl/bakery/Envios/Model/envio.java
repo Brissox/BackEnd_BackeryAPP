@@ -22,33 +22,25 @@ import lombok.NoArgsConstructor;
 
 public class envio {
      @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID_ENVIO")
-    @Schema(description="identificador del envio, se genera automaticamente")
-    private Long id_envio;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_ENVIO")
+    @Schema(description = "Identificador único del envío", example = "1")
+    private Long idEnvio;
 
-    @Column(name="TRANSPORTISTA",nullable=false,length=50)
-    @Schema(description="nombre de la empresa que transporta el envio",example="starken")
-    private String transportista;
+    @Column(name = "ID_PEDIDO", nullable = false)
+    @Schema(description = "Identificador del pedido asociado al envío", example = "10")
+    private Long idPedido;
 
-    @Column(name="NUMERO_GUIA",nullable=false,precision=10)
-    @Schema(description="codigo unico asignado a cada envio", example="111111")
-    private int numero_guia;
+    @Column(name = "DIRECCION_ENVIO", nullable = false, length = 150)
+    @Schema(description = "Dirección completa donde se realizará el envío", example = "Av. Los Pinos 123, Santiago")
+    private String direccionEnvio;
 
-    @Column(name="FECHA_ENVIO",nullable=false)
-    @Schema(description="Fecha en que el paquete se entrega al transportista",example="2025-06-24T15:30:00")
-    private LocalDateTime fecha_envio;
+    @Column(name = "FECHA_ENVIO", nullable = false)
+    @Schema(description = "Fecha y hora en que se despachó el pedido", example = "2025-11-04T14:30:00")
+    private LocalDateTime fechaEnvio;
 
-    @Column(name="FECHA_ENTREGA",nullable=true)
-    @Schema(description="fecha en que el paquete llega fisicamente a su destino final", example="2025-06-24T15:30:00")
-    private LocalDateTime fecha_entrega;
-
-    @Column(name="ESTADO",nullable=false,length=20)
-    @Schema(description="informacion del progreso del envio", example="en transito/en proceso de envio/entregado")
-    private String estado;
-    
-    @Column(name = "ID_PEDIDO",nullable=false,precision=10)
-    @Schema(description="identificador del pedido que se enviara", example="1")
-    private Long id_pedido;
+    @Column(name = "FECHA_ENTREGA")
+    @Schema(description = "Fecha y hora estimada o real de entrega del pedido", example = "2025-11-06T09:00:00")
+    private LocalDateTime fechaEntrega;
     
 }
