@@ -1,6 +1,7 @@
 package cl.bakery.Carrito.Model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="Carrito")
+@Table(name = "CARRITO")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,13 +33,12 @@ public class carrito {
     private Long idUsuario;
 
     @Column(name = "FECHA_CREACION", nullable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
     @Column(name = "TOTAL", nullable = false)
-    private BigDecimal total;
+    private long total;
 
     @Column(name = "ESTADO", nullable = false, length = 20)
     private String estado;
-    
 
 }

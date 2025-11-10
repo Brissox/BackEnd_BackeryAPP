@@ -1,7 +1,6 @@
 package cl.bakery.Pedidos.Model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -15,19 +14,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PEDIDOS")
+@Table(name = "PEDIDOS", schema = "ADMIN") // 👈 IMPORTANTE: fuerza el esquema correcto
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Todos los pedidos registrados en la empresa")
-
-public class pedido {
+public class pedido { // 👈 Nombre de clase con mayúscula, buena práctica en Java
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PEDIDO")
     @Schema(description = "Identificador del pedido", example = "1")
-    private Long id_pedido;
+    private Long idPedido;
 
     @Column(name = "FECHA", nullable = false)
     @Schema(description = "Fecha en que se realizó el pedido", example = "2025-11-07")
@@ -44,5 +42,4 @@ public class pedido {
     @Column(name = "MONTO", nullable = false, precision = 10)
     @Schema(description = "Monto total del pedido en moneda local", example = "12500")
     private Long monto;
-
 }

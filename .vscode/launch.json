@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DcarritoApplication",
+            "request": "launch",
+            "mainClass": "cl.bakery.Dcarrito.DcarritoApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-AutenticacionRegistroApplication<Autenticacion-Registro>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -18,7 +25,8 @@
             "mainClass": "cl.bakery.Carrito.CarritoApplication",
             "projectName": "Carrito",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=63467 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Carrito"
         },
         {
             "type": "java",
@@ -28,7 +36,8 @@
             "mainClass": "cl.bakery.Envios.EnviosApplication",
             "projectName": "Envios",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64528 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Envios"
         },
         {
             "type": "java",
@@ -38,7 +47,8 @@
             "mainClass": "cl.bakery.Pagos.PagosApplication",
             "projectName": "Pagos",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64542 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Pagos"
         },
         {
             "type": "java",
@@ -48,7 +58,8 @@
             "mainClass": "cl.bakery.Pedidos.PedidosApplication",
             "projectName": "Pedidos",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=60529 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Pedidos"
         },
         {
             "type": "java",
@@ -68,7 +79,8 @@
             "mainClass": "cl.bakery.RyC.RyCApplication",
             "projectName": "RyC",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=49324 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=RyC"
         },
         {
             "type": "java",
@@ -78,7 +90,8 @@
             "mainClass": "cl.bakery.Soporte.SoporteApplication",
             "projectName": "Soporte",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64919 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Soporte"
         },
         {
             "type": "java",
@@ -87,6 +100,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "cl.bakery.Usuarios.UsuariosApplication",
             "projectName": "Usuarios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DcarritoApplication<Dcarrito>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.bakery.Dcarrito.DcarritoApplication",
+            "projectName": "Dcarrito",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

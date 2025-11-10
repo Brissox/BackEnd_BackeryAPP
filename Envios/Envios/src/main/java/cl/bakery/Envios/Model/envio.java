@@ -21,34 +21,26 @@ import lombok.NoArgsConstructor;
 @Schema(description="Contiene la informacion relacionada con el proceso de envio de productos")
 
 public class envio {
-     @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID_ENVIO")
-    @Schema(description="identificador del envio, se genera automaticamente")
+    @Column(name = "ID_ENVIO")
+    @Schema(description = "Identificador del envío, se genera automáticamente")
     private Long id_envio;
 
-    @Column(name="TRANSPORTISTA",nullable=false,length=50)
-    @Schema(description="nombre de la empresa que transporta el envio",example="starken")
-    private String transportista;
+    @Column(name = "ID_PEDIDO", nullable = false)
+    @Schema(description = "Identificador del pedido asociado", example = "1")
+    private Long id_pedido;
 
-    @Column(name="NUMERO_GUIA",nullable=false,precision=10)
-    @Schema(description="codigo unico asignado a cada envio", example="111111")
-    private int numero_guia;
+    @Column(name = "DIRECCION_ENVIO", nullable = false, length = 200)
+    @Schema(description = "Dirección donde se entregará el pedido", example = "Av. Las Condes 1234, Santiago")
+    private String direccion_envio;
 
-    @Column(name="FECHA_ENVIO",nullable=false)
-    @Schema(description="Fecha en que el paquete se entrega al transportista",example="2025-06-24T15:30:00")
+    @Column(name = "FECHA_ENVIO", nullable = false)
+    @Schema(description = "Fecha en que se envía el pedido", example = "2025-06-24T15:30:00")
     private LocalDateTime fecha_envio;
 
-    @Column(name="FECHA_ENTREGA",nullable=true)
-    @Schema(description="fecha en que el paquete llega fisicamente a su destino final", example="2025-06-24T15:30:00")
+    @Column(name = "FECHA_ENTREGA")
+    @Schema(description = "Fecha estimada o real de entrega del pedido", example = "2025-06-26T18:00:00")
     private LocalDateTime fecha_entrega;
-
-    @Column(name="ESTADO",nullable=false,length=20)
-    @Schema(description="informacion del progreso del envio", example="en transito/en proceso de envio/entregado")
-    private String estado;
-    
-    @Column(name = "ID_PEDIDO",nullable=false,precision=10)
-    @Schema(description="identificador del pedido que se enviara", example="1")
-    private Long id_pedido;
-    
 }

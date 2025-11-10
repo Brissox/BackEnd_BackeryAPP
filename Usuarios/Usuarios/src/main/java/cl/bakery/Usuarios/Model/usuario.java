@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los productos registrados en la empresa")
+@Schema(description = "Todos los Usuarios registrados en la empresa")
 
 public class usuario {
 

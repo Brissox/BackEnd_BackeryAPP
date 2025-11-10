@@ -1,6 +1,7 @@
 package cl.bakery.RyC.Model;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,7 +43,7 @@ public class ryc {
     private String comentario;
 
     @Column(name = "FECHA", nullable = false)
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     @Column(name = "ESTADO", nullable = false, length = 20)
     private String estado;
