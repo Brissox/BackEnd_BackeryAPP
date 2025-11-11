@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.bakery.Productos.Assembler.productoModelAssembler;
 import cl.bakery.Productos.Model.producto;
-import cl.bakery.Productos.Repository.productoRepository;
 import cl.bakery.Productos.Services.productoServices;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,9 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/Productos")
 public class productoController {
 

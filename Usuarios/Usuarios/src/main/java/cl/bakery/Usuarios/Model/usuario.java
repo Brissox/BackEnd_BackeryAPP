@@ -5,76 +5,63 @@ import java.sql.Date;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//SE CREA LA ENTIDAD USUARIO CAMBIANDO TODO LO QUE TENIA BRISSO ANTES
+
 @Entity
-@Table(name="USUARIO")
+@Table(name = "USUARIO")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los productos registrados en la empresa")
-
+@Schema(description = "Entidad que representa a los usuarios registrados en la empresa")
 public class usuario {
 
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "ID_USUARIO")
-    @Schema(description="identificador del usuario", example="1")
-    private long id_usuario;
+    @Id
+    @Column(name = "ID_USUARIO", length = 128)
+    @Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
+    private String idUsuario; // UID de Firebase
 
-    @Column(name= "ID_ROL", nullable=false)
-    @Schema(description="identificador del rol del usuario", example="1")
-    private long id_rol;
-
-    @Column(name= "NOMBRE",nullable= false , length = 30)
-    @Schema(description="nombre del usuario",example="Juan")
+    @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
 
-    @Column(name= "APELLIDO_PATERNO",nullable= false , length = 30)
-    @Schema(description="Apellido paterno del usuario", example="Perez")
-    private String apellido_paterno;
+    @Column(name = "USUARIO", nullable = false, length = 30, unique = true)
+    private String usuario;
 
-    @Column(name= "APELLIDO_MATERNO",nullable= true , length = 30)
-    @Schema(description="Apellido materno del usuario", example="Rojas")
-    private String apellido_materno;
-
-    @Column(name = "TELEFONO",nullable= true , length = 9)
-    @Schema(description="Telefono de contacto del usuario", example="999777888")
-    private Long telefono;
-
-    @Column(name = "DIRECCION",nullable= true , length = 50)
-    @Schema(description="Direccion del domicilio del usuario", example="inglaterra 123")
-    private String direccion;
-
-    @Column(name= "FECHA_NACIMIENTO",nullable= true)
-    @Schema(description="Fecha de nacimiento", example="DD-MM-YYYY")
-    private Date fecha_nacimiento;
-
-    @Column(name = "CORREO",nullable= false , length = 100)
-    @Schema(description="correo de contacto del usuario", example="xxxx@xxx.xxx")
+    @Column(name = "CORREO", nullable = false, length = 100, unique = true)
     private String correo;
 
-    @Column(name = "CONTRASENA",nullable= false , length = 20)
-    @Schema(description="Contrasena del usuario", example="xxxxxxxxxxxx")
-    private String contrasena;
+    @Column(name = "CELULAR", length = 15)
+    private String celular;
 
-    @Column(name = "RUN",nullable= false , length = 9)
-    @Schema(description="rol unico natural del usuario sin digito verificador ni puntos",example="11222333")
-    private int run;
+    @Column(name = "GENERO", length = 15)
+    private String genero;
 
-    @Column(name = "DV",nullable= false , length = 1)
-    @Schema(description="digito verificador del run", example="k")
-    private String dv;
+    @Column(name = "FECHA_NACIMIENTO")
+    private Date fechaNacimiento;
 
-    @Column(name = "ESTADO",nullable= false , length = 1)
-    @Schema(description="estado del usuario",example="A=Activo / I=Inactivo")
-    private String estado;
+    @Column(name = "PAIS", length = 30)
+    private String pais;
 
-    
+    @Column(name = "CIUDAD", length = 30)
+    private String ciudad;
+
+    @Column(name = "DIRECCION", length = 100)
+    private String direccion;
+
+    @Column(name = "CODIGO_DESC", length = 30)
+    private String codigoDesc;
+
+    @Enumerated(EnumType.STRING)//ENUMTYPE DECLARA EL ROL COMO LOS DATOS QUE SE DEFINIERON EN ROL.JAVA
+    @Column(name = "ROL", nullable = false, length = 20)
+    private Rol rol;
+
+    @Column(name = "ESTADO", nullable = false, length = 1)
+    private String estado = "A";
 }
