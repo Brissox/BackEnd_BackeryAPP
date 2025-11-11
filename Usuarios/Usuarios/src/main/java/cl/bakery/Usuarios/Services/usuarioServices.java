@@ -24,8 +24,8 @@ public class usuarioServices {
         return usuariosrepository.findAll();
     }
 
-    public usuario BuscarUnUsuario(Long ID_USUARIO){
-        return usuariosrepository.findById(ID_USUARIO).get();
+    public usuario BuscarUnUsuario(String UID){
+        return usuariosrepository.findById(UID).get();
 
     }
 
@@ -34,8 +34,8 @@ public class usuarioServices {
 
     }
 
-    public void EliminarUsuario(Long ID_USUARIO){
-        usuariosrepository.deleteById(ID_USUARIO);
+    public void EliminarUsuario(String UID){
+        usuariosrepository.deleteById(UID);
     }
 
 }
