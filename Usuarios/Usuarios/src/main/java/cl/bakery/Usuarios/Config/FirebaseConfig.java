@@ -16,7 +16,7 @@ public class FirebaseConfig {
     public void initializeFirebase() throws IOException {
         if (FirebaseApp.getApps().isEmpty()) {
             FileInputStream serviceAccount =
-                    new FileInputStream("src/main/resources/bakeryweb-4145f-firebase-adminsdk-fbsvc-0ec102702c.json");
+                    new FileInputStream("src/main/resources/bakeryweb-4145f-firebase-adminsdk-fbsvc-c453d06d6b.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
