@@ -2,12 +2,17 @@ package cl.bakery.Carrito.Model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +24,21 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los productos registrados en la empresa")
+@Schema(description = "Todos los productos registrados en el Carrito")
 
 public class detalleCarrito {
 
     @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_DETALLE_CARRITO")
     @Schema(description = "Identificador único del detalle del carrito", example = "1")
     private Long idDetalleCarrito;
 
-    @Column(name = "ID_CARRITO", nullable = false)
-    @Schema(description = "Identificador del carrito al que pertenece este detalle", example = "10")
-    private Long idCarrito;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CARRITO", nullable = false)
+    @JsonBackReference
+    @Schema(description = "Carrito al que pertenece este detalle")
+    private carrito carrito;
 
     @Column(name = "ID_PRODUCTO", nullable = false)
     @Schema(description = "Identificador del producto asociado al carrito", example = "501")
