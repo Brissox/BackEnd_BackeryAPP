@@ -47,6 +47,8 @@ private LocalDate fecha;
 @Schema(description = "Monto total del pedido en moneda local", example = "12500")
 private Long monto;
 
-
+@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Schema(description = "Lista de productos agregados al pedido")
+    private List<detallePedido> detalles;
     
 }

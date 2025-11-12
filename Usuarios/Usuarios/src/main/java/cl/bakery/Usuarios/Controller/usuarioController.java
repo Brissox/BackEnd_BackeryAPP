@@ -138,7 +138,7 @@ public class usuarioController {
     }
     
     /*
-        S@DeleteMapping("/{ID_USUARIO}")
+        @DeleteMapping("/{ID_USUARIO}")
         public ResponseEntity<String> EliminarUsuario(@PathVariable Long ID_USUARIO){
             try {
                 usuario usuarioBuscado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
