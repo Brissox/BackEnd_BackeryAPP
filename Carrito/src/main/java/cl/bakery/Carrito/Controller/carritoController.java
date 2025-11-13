@@ -56,7 +56,7 @@ public class carritoController {
         }
     }
 
-     /*Listar un carrito*/
+     /*Listar los carritos por usuario*/
     @GetMapping("/User/{idUsuario}")
     public ResponseEntity<?> buscarCarPorUsuario(@PathVariable Long idUsuario) {
         try {
