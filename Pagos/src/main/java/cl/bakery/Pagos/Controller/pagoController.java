@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.bakery.Pagos.Assembler.pagoModelAssembler;
 import cl.bakery.Pagos.Model.pago;
 import cl.bakery.Pagos.Services.pagoServices;
 import io.swagger.v3.oas.annotations.Operation;
@@ -94,6 +95,17 @@ public class pagoController {
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("No se puede registrar el Pago");
     }
+    }
+
+
+     @GetMapping("/Pedido/{idPedido}")
+    public ResponseEntity<?> buscarCarPorPedido(@PathVariable Long idPedido) {
+        try {
+            List<pago> pagos = pagoservices.buscarPorPedido(idPedido);
+            return ResponseEntity.ok(pagos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pagos no encontrado");
+        }
     }
     
 

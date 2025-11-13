@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cl.bakery.Pagos.Model.pago;
-import  cl.bakery.Usuarios.Model.usuario;
-
-import cl.bakery.Usuarios.Repository.usuarioRepository;
-
+import cl.bakery.Pagos.Repository.pagoRepository;
 import jakarta.transaction.Transactional;
 
 
@@ -37,6 +34,11 @@ public class pagoServices {
 
     public void EliminarPago(Long ID_PAGO){
         pagosrepository.deleteById(ID_PAGO);
+    }
+
+     // Buscar por usuario
+    public List<pago> buscarPorPedido(Long idPedido) {
+        return pagosrepository.findByIdPedido(idPedido);
     }
 
 }
