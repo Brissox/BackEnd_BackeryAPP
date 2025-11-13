@@ -22,13 +22,15 @@ import lombok.NoArgsConstructor;
 public class soporte {
 
     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SOPORTE", nullable = false)
     @Schema(description = "Identificador único del soporte", example = "1")
-    private int id_soporte;
+    private Long id_soporte;
+
 
     @Column(name = "ID_USUARIO", nullable = false)
     @Schema(description = "Identificador del usuario que creó el ticket", example = "1001")
-    private int id_usuario;
+    private Long id_usuario;
 
     @Column(name = "ASUNTO", nullable = false, length = 100)
     @Schema(description = "Asunto o título del ticket de soporte", example = "Problema con el pago")
