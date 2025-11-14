@@ -38,4 +38,9 @@ public class usuarioServices {
         usuariosrepository.deleteById(ID_USUARIO);
     }
 
+     public usuario buscarUsuarioUID(String UID){
+        return usuariosrepository.findByIdUID(UID);
+
+    }
+
 }

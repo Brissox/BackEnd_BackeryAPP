@@ -5,6 +5,8 @@ import java.sql.Date;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,59 +24,89 @@ import lombok.NoArgsConstructor;
 
 public class usuario {
 
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "ID_USUARIO")
-    @Schema(description="identificador del usuario", example="1")
-    private long id_usuario;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "ID_USUARIO")
+@Schema(description = "Identificador del usuario", example = "1")
+private Long idUsuario;
 
-    @Column(name= "ID_ROL", nullable=false)
-    @Schema(description="identificador del rol del usuario", example="1")
-    private long id_rol;
+// Si usas Firebase, descomenta esta línea y elimina el ID autogenerado
 
-    @Column(name= "NOMBRE",nullable= false , length = 30)
-    @Schema(description="nombre del usuario",example="Juan")
-    private String nombre;
+@Column(name = "UID", length = 128)
+@Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
+private String UID_FB;
 
-    @Column(name= "APELLIDO_PATERNO",nullable= false , length = 30)
-    @Schema(description="Apellido paterno del usuario", example="Perez")
-    private String apellido_paterno;
+@Column(name = "ID_ROL", nullable = false)
+@Schema(description = "Identificador del rol del usuario", example = "1")
+private Long idRol;
 
-    @Column(name= "APELLIDO_MATERNO",nullable= true , length = 30)
-    @Schema(description="Apellido materno del usuario", example="Rojas")
-    private String apellido_materno;
+@Column(name = "NOMBRE", nullable = false, length = 50)
+@Schema(description = "Nombre del usuario", example = "Juan")
+private String nombre;
 
-    @Column(name = "TELEFONO",nullable= true , length = 9)
-    @Schema(description="Telefono de contacto del usuario", example="999777888")
-    private Long telefono;
+@Column(name = "APELLIDO_PATERNO", nullable = false, length = 30)
+@Schema(description = "Apellido paterno del usuario", example = "Perez")
+private String apellidoPaterno;
 
-    @Column(name = "DIRECCION",nullable= true , length = 50)
-    @Schema(description="Direccion del domicilio del usuario", example="inglaterra 123")
-    private String direccion;
+@Column(name = "APELLIDO_MATERNO", length = 30)
+@Schema(description = "Apellido materno del usuario", example = "Rojas")
+private String apellidoMaterno;
 
-    @Column(name= "FECHA_NACIMIENTO",nullable= true)
-    @Schema(description="Fecha de nacimiento", example="DD-MM-YYYY")
-    private Date fecha_nacimiento;
+@Column(name = "USUARIO", nullable = false, length = 30, unique = true)
+@Schema(description = "Nombre de usuario del sistema", example = "juan123")
+private String usuario;
 
-    @Column(name = "CORREO",nullable= false , length = 100)
-    @Schema(description="correo de contacto del usuario", example="xxxx@xxx.xxx")
-    private String correo;
+@Column(name = "CORREO", nullable = false, length = 100, unique = true)
+@Schema(description = "Correo electrónico del usuario", example = "juan@example.com")
+private String correo;
 
-    @Column(name = "CONTRASENA",nullable= false , length = 20)
-    @Schema(description="Contrasena del usuario", example="xxxxxxxxxxxx")
-    private String contrasena;
+@Column(name = "CONTRASENA", nullable = false, length = 20)
+@Schema(description = "Contraseña del usuario", example = "********")
+private String contrasena;
 
-    @Column(name = "RUN",nullable= false , length = 9)
-    @Schema(description="rol unico natural del usuario sin digito verificador ni puntos",example="11222333")
-    private int run;
+@Column(name = "TELEFONO", length = 9)
+@Schema(description = "Teléfono de contacto", example = "987654321")
+private Long telefono;
 
-    @Column(name = "DV",nullable= false , length = 1)
-    @Schema(description="digito verificador del run", example="k")
-    private String dv;
+@Column(name = "GENERO", length = 15)
+@Schema(description = "Género del usuario", example = "Masculino / Femenino / Otro")
+private String genero;
 
-    @Column(name = "ESTADO",nullable= false , length = 1)
-    @Schema(description="estado del usuario",example="A=Activo / I=Inactivo")
-    private String estado;
+@Column(name = "FECHA_NACIMIENTO")
+@Schema(description = "Fecha de nacimiento", example = "1990-05-21")
+private Date fechaNacimiento;
 
+@Column(name = "PAIS", length = 30)
+@Schema(description = "País del usuario", example = "Chile")
+private String pais;
+
+@Column(name = "CIUDAD", length = 30)
+@Schema(description = "Ciudad del usuario", example = "Santiago")
+private String ciudad;
+
+@Column(name = "DIRECCION", length = 100)
+@Schema(description = "Dirección del domicilio", example = "Av. Libertador 1234")
+private String direccion;
+
+@Column(name = "CODIGO_DESC", length = 30)
+@Schema(description = "Código de descuento asignado al usuario", example = "WELCOME10")
+private String codigoDesc;
+
+@Column(name = "RUN", nullable = false, length = 9)
+@Schema(description = "RUN sin puntos ni DV", example = "11222333")
+private Integer run;
+
+@Column(name = "DV", nullable = false, length = 1)
+@Schema(description = "Dígito verificador del RUN", example = "K")
+private String dv;
+
+@Enumerated(EnumType.STRING)
+@Column(name = "ROL", nullable = false, length = 20)
+@Schema(description = "Rol del usuario definido en ENUM Rol", example = "ADMIN")
+private Rol rol;
+
+@Column(name = "ESTADO", nullable = false, length = 1)
+@Schema(description = "Estado del usuario (A = Activo, I = Inactivo)", example = "A")
+private String estado = "A";
     
 }

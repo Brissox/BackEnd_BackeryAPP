@@ -5,13 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
 import cl.bakery.Usuarios.Model.usuario;
@@ -26,11 +31,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-
-
-
 @RestController
-@RequestMapping("/api/v1/Usuarios")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/Usuarios")
 public class usuarioController {
 
 
@@ -38,6 +41,7 @@ public class usuarioController {
     private usuarioServices usuarioservices;
 @Autowired
     private usuarioModelAssembler assambler;
+
 //ENDPOINT PARA listar todos los usuarios
     @GetMapping
     @Operation(summary = "ENDPOINT QUE LISTA TODOS LOS USUARIOS", description = "Operacion que lista todos los Usuarios")
@@ -82,6 +86,19 @@ public class usuarioController {
     }
 
 
+    // NO SE CAMBIA MUCHO AQUI
+    @GetMapping("/{UID}")
+    @Operation(summary = "Obtiene un usuario por UID")
+    public ResponseEntity<?> buscarUsuarioUID(@PathVariable String UID) {
+        try {
+            usuario usuarioBuscado1 = usuarioservices.buscarUsuarioUID(UID);
+            return ResponseEntity.ok(assambler.toModel(usuarioBuscado1));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra Usuario");
+        }
+    }
+
+
 //ENDPOINT PARA agregar un usuario
     @PostMapping
     @Operation(summary = "ENDPOINT QUE REGISTRA UN USUARIO", description = "ENDPOINT QUE REGISTRA UN USUARIO",requestBody= @io.swagger.v3.oas.annotations.parameters.RequestBody(description="USUARIO QUE SE VA A REGISTRAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
@@ -119,10 +136,9 @@ public class usuarioController {
         try {
             usuario usuarioActualizado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
             usuarioActualizado.setNombre(usuarioActualizar.getNombre());
-            usuarioActualizado.setId_rol(usuarioActualizar.getId_rol());
-            usuarioActualizado.setApellido_paterno(usuarioActualizar.getApellido_paterno());
-            usuarioActualizado.setApellido_materno(usuarioActualizar.getApellido_materno());
-            usuarioActualizado.setFecha_nacimiento(usuarioActualizar.getFecha_nacimiento());
+            usuarioActualizado.setApellidoPaterno(usuarioActualizar.getApellidoPaterno());
+            usuarioActualizado.setApellidoMaterno(usuarioActualizar.getApellidoMaterno());
+            usuarioActualizado.setFechaNacimiento(usuarioActualizar.getFechaNacimiento());
             usuarioActualizado.setCorreo(usuarioActualizar.getCorreo());
             usuarioActualizado.setDireccion(usuarioActualizar.getDireccion());
             usuarioActualizado.setTelefono(usuarioActualizar.getTelefono());
@@ -130,12 +146,57 @@ public class usuarioController {
             usuarioActualizado.setRun(usuarioActualizar.getRun());
             usuarioActualizado.setDv(usuarioActualizar.getDv());
             usuarioActualizado.setEstado(usuarioActualizar.getEstado());
+            usuarioActualizado.setGenero(usuarioActualizar.getGenero());
+            usuarioActualizado.setPais(usuarioActualizar.getPais());
+            usuarioActualizado.setCiudad(usuarioActualizar.getCiudad());
+            usuarioActualizado.setCodigoDesc(usuarioActualizar.getCodigoDesc());    
             usuarioservices.GuardarUsuario(usuarioActualizado);
             return ResponseEntity.ok(assambler.toModel(usuarioActualizado));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
         }
     }
+    
+
+    @PostMapping("/Registrar")
+    @Operation(summary = "Registra  un usuario autenticado con Firebase", description = "Verifica el token enviado desde Firebase y guarda el usuario en la BD")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario registrado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
+            @ApiResponse(responseCode = "401", description = "Token inválido o expirado", content = @Content(mediaType = "application/json"))
+    })
+    public ResponseEntity<?> registrarUsuario(
+            @RequestHeader("Authorization") String tokenHeader,
+            @RequestBody usuario usuarioGuardar) {
+        try {
+            // ESTA SHIT RECIBE EL TOKEN QUE MANDA EL FRONT
+            String idToken = tokenHeader.replace("Bearer ", "");
+            // VERIFICA EL TOKEN
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            // DEFINE EL UID Y EL EMAIL CON EL TOKEN "DECODIFICADO"
+            String uid = decodedToken.getUid();
+            String email = decodedToken.getEmail();
+
+            // GUARDA UID Y CORREO DESDE FIREBASE-- Faltan agregar datos
+            usuarioGuardar.setUID_FB(uid);
+            usuarioGuardar.setCorreo(email);
+
+
+            // GUARDA CON LA FUNCION DE JPA A LA BASE DE DATOS
+            usuario usuarioRegistrado = usuarioservices.GuardarUsuario(usuarioGuardar);
+
+            // DEVUELVE EL USUARIO
+            return ResponseEntity.ok(assambler.toModel(usuarioRegistrado));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Token inválido o error al registrar: " + e.getMessage());
+        }
+    }
+
+
+
+
     
     /*
         @DeleteMapping("/{ID_USUARIO}")
@@ -148,6 +209,22 @@ public class usuarioController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
             }
         }
-            */
+           
+         @PutMapping("/{uid}")
+    @Operation(summary = "Actualiza los datos de un usuario por UID")
+    public ResponseEntity<?> actualizarUsuario(@PathVariable String uid, @RequestBody usuario usuarioActualizar) {
+        try {
+            usuario usuarioActualizado = usuarioservices.BuscarUnUsuario(uid);
+            usuarioActualizado.setNombre(usuarioActualizar.getNombre());
+            usuarioActualizado.setDireccion(usuarioActualizar.getDireccion());
+            usuarioActualizado.setCelular(usuarioActualizar.getCelular());
+            usuarioActualizado.setEstado(usuarioActualizar.getEstado());
+            usuarioservices.GuardarUsuario(usuarioActualizado);
+            return ResponseEntity.ok(assembler.toModel(usuarioActualizado));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no está registrado");
+        }
+        
+        */
 
 }
