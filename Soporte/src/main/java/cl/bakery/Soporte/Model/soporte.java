@@ -30,7 +30,7 @@ public class soporte {
 
     @Column(name = "ID_USUARIO", nullable = false)
     @Schema(description = "Identificador del usuario que creó el ticket", example = "1001")
-    private Long id_usuario;
+    private Long idUsuario;
 
     @Column(name = "ASUNTO", nullable = false, length = 100)
     @Schema(description = "Asunto o título del ticket de soporte", example = "Problema con el pago")
