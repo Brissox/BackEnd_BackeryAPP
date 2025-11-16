@@ -32,7 +32,7 @@ private Long idUsuario;
 
 // Si usas Firebase, descomenta esta línea y elimina el ID autogenerado
 
-@Column(name = "UID", length = 128)
+@Column(name = "U_ID", length = 128)
 @Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
 private String UID_FB;
 
@@ -67,10 +67,6 @@ private String contrasena;
 @Column(name = "TELEFONO", length = 9)
 @Schema(description = "Teléfono de contacto", example = "987654321")
 private Long telefono;
-
-@Column(name = "GENERO", length = 15)
-@Schema(description = "Género del usuario", example = "Masculino / Femenino / Otro")
-private String genero;
 
 @Column(name = "FECHA_NACIMIENTO")
 @Schema(description = "Fecha de nacimiento", example = "1990-05-21")
