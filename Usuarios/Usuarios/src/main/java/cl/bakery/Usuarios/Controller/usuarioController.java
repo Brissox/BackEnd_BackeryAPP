@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -146,7 +147,6 @@ public class usuarioController {
             usuarioActualizado.setRun(usuarioActualizar.getRun());
             usuarioActualizado.setDv(usuarioActualizar.getDv());
             usuarioActualizado.setEstado(usuarioActualizar.getEstado());
-            usuarioActualizado.setGenero(usuarioActualizar.getGenero());
             usuarioActualizado.setPais(usuarioActualizar.getPais());
             usuarioActualizado.setCiudad(usuarioActualizar.getCiudad());
             usuarioActualizado.setCodigoDesc(usuarioActualizar.getCodigoDesc());    
@@ -195,10 +195,30 @@ public class usuarioController {
     }
 
 
-
-
+    //ENDPOINT PARA editar un usuario segun id
+    @PutMapping("/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
     
-    /*
+    @Operation(summary = "ENDPOINT QUE EDITA UN ESTADO DE USUARIO", description = "ENDPOINT QUE EDITA UN ESTADO DE USUARIO", requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(description="USUARIO QUE SE VA A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
+    @Parameters (value = {
+        @Parameter (name="ID_USUARIO", description= "ID del usuario que se editara", in = ParameterIn.PATH, required= true)})
+
+    @ApiResponses (value = {
+        @ApiResponse(responseCode = "200", description = "Se edito correctamente el estado del usuario", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
+        @ApiResponse(responseCode = "500", description = "Usuario no esta registrado", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se puede registrar el usuario")))
+    })
+
+
+    public ResponseEntity<?> ActualizarEstado(@PathVariable Long ID_USUARIO, @RequestBody usuario usuarioActualizar){
+        try {
+            usuario usuarioActualizado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
+            usuarioActualizado.setEstado(usuarioActualizar.getEstado());
+            return ResponseEntity.ok(assambler.toModel(usuarioActualizado));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
+        }
+    }
+
+
         @DeleteMapping("/{ID_USUARIO}")
         public ResponseEntity<String> EliminarUsuario(@PathVariable Long ID_USUARIO){
             try {
@@ -209,7 +229,7 @@ public class usuarioController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
             }
         }
-           
+           /*
          @PutMapping("/{uid}")
     @Operation(summary = "Actualiza los datos de un usuario por UID")
     public ResponseEntity<?> actualizarUsuario(@PathVariable String uid, @RequestBody usuario usuarioActualizar) {
