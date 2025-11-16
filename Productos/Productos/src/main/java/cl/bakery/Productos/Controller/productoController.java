@@ -132,6 +132,20 @@ public class productoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no esta registrado");
         }
     }
+
+
+        @GetMapping("/{CATEGORIA}")
+            public ResponseEntity<?> FiltrarPorCategoria(@PathVariable String categoria) {
+
+            List<producto> productos = productoService.BuscarPorCategoria(categoria);
+
+            if (productos.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No hay productos en esta categoría");
+            }
+
+            return ResponseEntity.ok(assembler.toCollectionModel(productos));
+        }
     
 
 /*

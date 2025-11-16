@@ -37,6 +37,11 @@ public class productoServices {
         productorepository.deleteById(ID_PRODUCTO);
     }
 
+    public List<producto> BuscarPorCategoria(String CATEGORIA) {
+    return productorepository.findByCategoria(CATEGORIA);
+}
+
+
 }
 
 

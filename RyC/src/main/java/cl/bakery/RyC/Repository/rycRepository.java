@@ -8,5 +8,6 @@ import cl.bakery.RyC.Model.*;
 
 public  interface rycRepository extends JpaRepository<ryc, Long> {
     List<ryc> findByIdUsuario(Long idUsuario);
+    List<ryc> findByIdProducto(Long idProducto);
     
 }

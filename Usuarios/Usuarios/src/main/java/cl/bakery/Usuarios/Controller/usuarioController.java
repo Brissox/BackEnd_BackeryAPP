@@ -208,17 +208,6 @@ public class usuarioController {
     })
 
 
-    public ResponseEntity<?> ActualizarEstado(@PathVariable Long ID_USUARIO, @RequestBody usuario usuarioActualizar){
-        try {
-            usuario usuarioActualizado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
-            usuarioActualizado.setEstado(usuarioActualizar.getEstado());
-            return ResponseEntity.ok(assambler.toModel(usuarioActualizado));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
-        }
-    }
-
-
         @DeleteMapping("/{ID_USUARIO}")
         public ResponseEntity<String> EliminarUsuario(@PathVariable Long ID_USUARIO){
             try {

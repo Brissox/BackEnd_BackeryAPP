@@ -56,7 +56,7 @@ public class rycController {
 
 
 
-//ENDPOINT PARA listar un pago por id
+//ENDPOINT PARA listar una resena por id
     @GetMapping("/{ID_RESENA}")
     @Operation(summary = "ENDPOINT QUE LISTA UNA RYC", description = "Operacion que lista un RYC")
     @Parameters (value = {
@@ -80,7 +80,7 @@ public class rycController {
     }
 
 
-//ENDPOINT PARA agregar un Pago
+//ENDPOINT PARA agregar una resena
     @PostMapping
     @Operation(summary = "ENDPOINT QUE REGISTRA UN RYC", description = "ENDPOINT QUE REGISTRA UN RYC",requestBody= @io.swagger.v3.oas.annotations.parameters.RequestBody(description="RYC QUE SE VA A REGISTRAR", required = true, content = @Content(schema = @Schema(implementation = ryc.class))))
     @ApiResponses (value = {
@@ -103,11 +103,22 @@ public class rycController {
         try {
             List<ryc> rycs = rycservices.buscarPorUsuario(idUsuario);
             return ResponseEntity.ok(rycs);
-        } catch (Exception e) {
+        } catch (Exception e) { 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
     
+
+    
+     @GetMapping("/Producto/{idProducto}")
+    public ResponseEntity<?> buscarPorProducto(@PathVariable Long idProducto) {
+        try {
+            List<ryc> rycs = rycservices.buscarPorProducto(idProducto);
+            return ResponseEntity.ok(rycs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
+        }
+    }
 
 
 

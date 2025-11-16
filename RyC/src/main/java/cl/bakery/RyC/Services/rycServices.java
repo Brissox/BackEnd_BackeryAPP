@@ -41,4 +41,9 @@ public class rycServices {
         return rycrepository.findByIdUsuario(idUsuario);
     }
 
+       // Buscar por producto
+    public List<ryc> buscarPorProducto(Long idProducto) {
+        return rycrepository.findByIdProducto(idProducto);
+    }
+
 }
