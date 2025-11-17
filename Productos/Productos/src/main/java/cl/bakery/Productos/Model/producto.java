@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 public class producto {
 
-      @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PRODUCTO")
     @Schema(description = "identificador del producto", example="1")
@@ -50,11 +50,11 @@ public class producto {
     @Schema(description ="estado en el que se encuentra el producto",example="A=Activo / I=Inactivo")
     private char estado;
 
-@Column(name = "STOCK",nullable= false , length = 999)
+    @Column(name = "STOCK",nullable= false , length = 999)
     @Schema(description="Cantidad disponible en inventario",example="11222333")
     private int stock;
 
-  @Column(name = "ENLACEIMG",nullable= false , length = 50)
+    @Column(name = "ENLACEIMG",nullable= false , length = 50)
     @Schema(description ="Enlace o URL de la imagen del producto", example="123123a")
     private String enlaceimg;
 

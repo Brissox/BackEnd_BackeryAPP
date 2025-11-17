@@ -12,25 +12,33 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 
-
-
 public class pedidoServices {
+
     @Autowired
     private pedidosRepository pedidorepository;
     
+    /* Obtener todos los pedidos */ 
     public List<pedido> BuscarTodoPedido(){
         return pedidorepository.findAll();
     }
 
+    /* Buscar un pedido específico */ 
     public pedido BuscarUnPedido(Long ID_PEDIDO){
         return pedidorepository.findById(ID_PEDIDO).get();
     }
 
+    /* Guardar o actualizar un pedido*/ 
     public pedido GuardarPedido(pedido pedido){
         return pedidorepository.save(pedido);
     }
 
+    /*  Eliminar un pedido */ 
     public void EliminarPedido(Long ID_PEDIDO){
         pedidorepository.deleteById(ID_PEDIDO);
+    }
+
+       // Buscar por usuario
+    public List<pedido> buscarPorUsuario(Long idUsuario) {
+        return pedidorepository.findByIdUsuario(idUsuario);
     }
 }
