@@ -7,61 +7,102 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//SE CREA LA ENTIDAD USUARIO CAMBIANDO TODO LO QUE TENIA BRISSO ANTES
-
 @Entity
-@Table(name = "USUARIO")
+@Table(name="USUARIO")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Entidad que representa a los usuarios registrados en la empresa")
+@Schema(description = "Todos los productos registrados en la empresa")
+
 public class usuario {
 
-    @Id
-    @Column(name = "ID_USUARIO", length = 128)
-    @Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
-    private String idUsuario; // UID de Firebase
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "ID_USUARIO")
+@Schema(description = "Identificador del usuario", example = "1")
+private Long idUsuario;
 
-    @Column(name = "NOMBRE", nullable = false, length = 50)
-    private String nombre;
+// Si usas Firebase, descomenta esta línea y elimina el ID autogenerado
 
-    @Column(name = "USUARIO", nullable = false, length = 30, unique = true)
-    private String usuario;
+@Column(name = "U_ID", length = 128)
+@Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
+private String UID_FB;
 
-    @Column(name = "CORREO", nullable = false, length = 100, unique = true)
-    private String correo;
+@Column(name = "ID_ROL", nullable = false)
+@Schema(description = "Identificador del rol del usuario", example = "1")
+private Long idRol;
 
-    @Column(name = "CELULAR", length = 15)
-    private String celular;
+@Column(name = "NOMBRE", nullable = false, length = 50)
+@Schema(description = "Nombre del usuario", example = "Juan")
+private String nombre;
 
-    @Column(name = "GENERO", length = 15)
-    private String genero;
+@Column(name = "APELLIDO_PATERNO", nullable = false, length = 30)
+@Schema(description = "Apellido paterno del usuario", example = "Perez")
+private String apellidoPaterno;
 
-    @Column(name = "FECHA_NACIMIENTO")
-    private Date fechaNacimiento;
+@Column(name = "APELLIDO_MATERNO", length = 30)
+@Schema(description = "Apellido materno del usuario", example = "Rojas")
+private String apellidoMaterno;
 
-    @Column(name = "PAIS", length = 30)
-    private String pais;
+@Column(name = "USUARIO", nullable = false, length = 30, unique = true)
+@Schema(description = "Nombre de usuario del sistema", example = "juan123")
+private String usuario;
 
-    @Column(name = "CIUDAD", length = 30)
-    private String ciudad;
+@Column(name = "CORREO", nullable = false, length = 100, unique = true)
+@Schema(description = "Correo electrónico del usuario", example = "juan@example.com")
+private String correo;
 
-    @Column(name = "DIRECCION", length = 100)
-    private String direccion;
+@Column(name = "CONTRASENA", nullable = false, length = 20)
+@Schema(description = "Contraseña del usuario", example = "********")
+private String contrasena;
 
-    @Column(name = "CODIGO_DESC", length = 30)
-    private String codigoDesc;
+@Column(name = "TELEFONO", length = 9)
+@Schema(description = "Teléfono de contacto", example = "987654321")
+private Long telefono;
 
-    @Enumerated(EnumType.STRING)//ENUMTYPE DECLARA EL ROL COMO LOS DATOS QUE SE DEFINIERON EN ROL.JAVA
-    @Column(name = "ROL", nullable = false, length = 20)
-    private Rol rol;
+@Column(name = "FECHA_NACIMIENTO")
+@Schema(description = "Fecha de nacimiento", example = "1990-05-21")
+private Date fechaNacimiento;
 
-    @Column(name = "ESTADO", nullable = false, length = 1)
-    private String estado = "A";
+@Column(name = "PAIS", length = 30)
+@Schema(description = "País del usuario", example = "Chile")
+private String pais;
+
+@Column(name = "CIUDAD", length = 30)
+@Schema(description = "Ciudad del usuario", example = "Santiago")
+private String ciudad;
+
+@Column(name = "DIRECCION", length = 100)
+@Schema(description = "Dirección del domicilio", example = "Av. Libertador 1234")
+private String direccion;
+
+@Column(name = "CODIGO_DESC", length = 30)
+@Schema(description = "Código de descuento asignado al usuario", example = "WELCOME10")
+private String codigoDesc;
+
+@Column(name = "RUN", nullable = false, length = 9)
+@Schema(description = "RUN sin puntos ni DV", example = "11222333")
+private Integer run;
+
+@Column(name = "DV", nullable = false, length = 1)
+@Schema(description = "Dígito verificador del RUN", example = "K")
+private String dv;
+
+@Enumerated(EnumType.STRING)
+@Column(name = "ROL", nullable = false, length = 20)
+@Schema(description = "Rol del usuario definido en ENUM Rol", example = "ADMIN")
+private Rol rol;
+
+@Column(name = "ESTADO", nullable = false, length = 1)
+@Schema(description = "Estado del usuario (A = Activo, I = Inactivo)", example = "A")
+private String estado = "A";
+    
 }

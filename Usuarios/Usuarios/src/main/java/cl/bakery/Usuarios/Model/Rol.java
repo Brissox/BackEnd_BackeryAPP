@@ -4,5 +4,5 @@ package cl.bakery.Usuarios.Model;
 
 public enum Rol {
     ADMIN,
-    COMPRADOR
+    ClIENTE
 }

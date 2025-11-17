@@ -40,12 +40,10 @@ public class pedidoController {
 
     // ENDPOINT PARA BUSCAR TODOS LOS PEDIDOS
     @GetMapping
-
     @Operation(summary = "PEDIDOS", description = "Operacion que lista todos los pedidos")
     @ApiResponses (value = {
         @ApiResponse(responseCode = "200", description = "Se listaron correctamente los pedidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = pedido.class))),
         @ApiResponse(responseCode = "404", description = "No se encontro ningun pedido", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se encuentran Datos")))
-
 
     })
     public ResponseEntity<?> ListarPedidos(){
@@ -57,6 +55,7 @@ public class pedidoController {
             return ResponseEntity.ok(assembler.toCollectionModel(pedidos));
         }
     }
+
 
      // ENDPOINT PARA BUSCAR UN PEDIDO
     @GetMapping("/{ID_PEDIDO}")
@@ -80,6 +79,21 @@ public class pedidoController {
 
         }
     }
+
+ /*Listar los pedidos del usuario*/
+    @GetMapping("/User/{idUsuario}")
+    public ResponseEntity<?> buscarCarPorUsuario(@PathVariable Long idUsuario) {
+        try {
+            List<pedido> pedidos = pedidoservice.buscarPorUsuario(idUsuario);
+            return ResponseEntity.ok(pedidos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido no encontrado");
+        }
+    }
+
+
+
+
 
     // ENDPOINT PARA REGISTRAR UN PEDIDO
     @PostMapping
@@ -113,9 +127,10 @@ public class pedidoController {
         try {
             pedido pedidoActualizado = pedidoservice.BuscarUnPedido(ID_PEDIDO);
             pedidoActualizado.setFecha(pedidoActualizar.getFecha());
-            pedidoActualizado.setVendedor(pedidoActualizar.getVendedor());
-            pedidoActualizado.setMonto(pedidoActualizar.getMonto());
-            pedidoActualizado.setCliente(pedidoActualizar.getCliente());
+            pedidoActualizado.setCantidad_productos(pedidoActualizar.getCantidad_productos());
+            pedidoActualizado.setTotal(pedidoActualizar.getTotal());
+            pedidoActualizado.setMetodo_de_pago(pedidoActualizar.getMetodo_de_pago());
+            pedidoActualizado.setDescuentos(pedidoActualizar.getDescuentos());
             pedidoservice.GuardarPedido(pedidoActualizado);
             return ResponseEntity.ok(assembler.toModel(pedidoActualizar));
         } catch (Exception e) {
