@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseToken;
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
 import cl.bakery.Usuarios.Model.usuario;
 import cl.bakery.Usuarios.Services.usuarioServices;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -86,19 +85,19 @@ public class usuarioController {
         
     }
 
-
+/* 
     // NO SE CAMBIA MUCHO AQUI
-    @GetMapping("/{UID}")
+    @GetMapping("/{uidFb}")
     @Operation(summary = "Obtiene un usuario por UID")
-    public ResponseEntity<?> buscarUsuarioUID(@PathVariable String UID) {
+    public ResponseEntity<?> buscarUsuarioUID(@PathVariable String uidFb) {
         try {
-            usuario usuarioBuscado1 = usuarioservices.buscarUsuarioUID(UID);
+            usuario usuarioBuscado1 = usuarioservices.buscarUsuarioUID(uidFb);
             return ResponseEntity.ok(assambler.toModel(usuarioBuscado1));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra Usuario");
         }
     }
-
+*/
 
 //ENDPOINT PARA agregar un usuario
     @PostMapping
@@ -121,7 +120,7 @@ public class usuarioController {
 
 
 //ENDPOINT PARA editar un usuario segun id
-    @PutMapping("/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
+    @PutMapping("/G/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
     
     @Operation(summary = "ENDPOINT QUE EDITA UN USUARIO", description = "ENDPOINT QUE EDITA UN USUARIO", requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(description="USUARIO QUE SE VA A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
     @Parameters (value = {
@@ -177,7 +176,7 @@ public class usuarioController {
             String email = decodedToken.getEmail();
 
             // GUARDA UID Y CORREO DESDE FIREBASE-- Faltan agregar datos
-            usuarioGuardar.setUID_FB(uid);
+            usuarioGuardar.setUidFb(uid);
             usuarioGuardar.setCorreo(email);
 
 
@@ -196,7 +195,7 @@ public class usuarioController {
 
 
     //ENDPOINT PARA editar un usuario segun id
-    @PutMapping("/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
+    @PutMapping("/E/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
     
     @Operation(summary = "ENDPOINT QUE EDITA UN ESTADO DE USUARIO", description = "ENDPOINT QUE EDITA UN ESTADO DE USUARIO", requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(description="USUARIO QUE SE VA A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
     @Parameters (value = {

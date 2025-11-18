@@ -18,7 +18,7 @@ public class usuarioModelAssembler implements RepresentationModelAssembler<usuar
         return EntityModel.of(
             u,
             linkTo(methodOn(usuarioController.class).BuscarUsuario(u.getIdUsuario())).withRel("LINKS"),
-            linkTo(methodOn(usuarioController.class).buscarUsuarioUID(u.getUID_FB())).withRel("buscar-usuario-por-UID"),
+            /*linkTo(methodOn(usuarioController.class).buscarUsuarioUID(u.getUidFb())).withRel("buscar-usuario-por-UID"),*/
             linkTo(methodOn(usuarioController.class).ListarUsuarios()).withRel("todas-los-Usuario"),
             linkTo(methodOn(usuarioController.class).ActualizarUsuarios(u.getIdUsuario(), u)).withRel("actualiza-una-pruducto")
         );

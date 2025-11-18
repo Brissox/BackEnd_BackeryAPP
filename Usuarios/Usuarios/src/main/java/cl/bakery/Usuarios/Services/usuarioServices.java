@@ -38,9 +38,9 @@ public class usuarioServices {
         usuariosrepository.deleteById(ID_USUARIO);
     }
 
-     public usuario buscarUsuarioUID(String UID){
-        return usuariosrepository.findByIdUID(UID);
+    /*  public usuario buscarUsuarioUID(String uidFb){
+        return usuariosrepository.findByIdUID(uidFb);
 
-    }
+    }*/
 
 }
