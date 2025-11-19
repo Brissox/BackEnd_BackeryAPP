@@ -3,13 +3,15 @@ package cl.bakery.Usuarios.security;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.google.api.client.util.Value;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,36 +21,53 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApiKeyFilter.class);
     private static final String HEADER_NAME = "X-API-KEY";
-    private static final String VALID_API_KEY = "123456789ABCDEF";
+
+    private final String validApiKey;
+
+    public ApiKeyFilter(@Value("${app.api.key}") String validApiKey) {
+        this.validApiKey = validApiKey != null ? validApiKey.trim() : null;
+        logger.info("ApiKeyFilter inicializado. API Key cargada? {}", this.validApiKey != null);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
-                                    throws ServletException, IOException {
+            throws ServletException, IOException {
 
         String path = request.getRequestURI();
+        logger.debug("Request URI: {}", path);
 
-        // Permitir Swagger completamente
+        // permitir Swagger sin API Key
         if (path.contains("/swagger-ui") ||
             path.contains("/v3/api-docs") ||
-            path.contains("/swagger-ui.html") ||
             path.contains("/doc")) {
 
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Validar API Key en el resto de rutas
+        // leer encabezado
         String apiKey = request.getHeader(HEADER_NAME);
+        logger.debug("Header {} = {}", HEADER_NAME, apiKey);
 
-        if (apiKey == null || !apiKey.equals(VALID_API_KEY)) {
+        // validar API Key
+        if (apiKey == null || validApiKey == null || !apiKey.trim().equals(validApiKey)) {
+            logger.warn("API KEY inválida o ausente. Recibida='{}'", apiKey);
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().write("API KEY INVALIDA O AUSENTE");
             return;
         }
 
+        // 🔥 MARCAR COMO AUTENTICADO
+        UsernamePasswordAuthenticationToken auth =
+                new UsernamePasswordAuthenticationToken("apikey-user", null, Collections.emptyList());
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        // continuar con la cadena
         filterChain.doFilter(request, response);
     }
 }
