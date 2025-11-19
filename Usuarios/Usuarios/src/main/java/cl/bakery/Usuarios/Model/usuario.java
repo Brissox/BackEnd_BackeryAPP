@@ -5,11 +5,11 @@ import java.sql.Date;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,11 +34,7 @@ private Long idUsuario;
 
 @Column(name = "U_ID", length = 128)
 @Schema(description = "UID proporcionado por Firebase", example = "hYtU92lKp1sXq9zT2N7Q8W")
-private String UID_FB;
-
-@Column(name = "ID_ROL", nullable = false)
-@Schema(description = "Identificador del rol del usuario", example = "1")
-private Long idRol;
+private String uidFb;
 
 @Column(name = "NOMBRE", nullable = false, length = 50)
 @Schema(description = "Nombre del usuario", example = "Juan")
@@ -96,13 +92,12 @@ private Integer run;
 @Schema(description = "Dígito verificador del RUN", example = "K")
 private String dv;
 
-@Enumerated(EnumType.STRING)
-@Column(name = "ROL", nullable = false, length = 20)
-@Schema(description = "Rol del usuario definido en ENUM Rol", example = "ADMIN")
-private Rol rol;
 
 @Column(name = "ESTADO", nullable = false, length = 1)
 @Schema(description = "Estado del usuario (A = Activo, I = Inactivo)", example = "A")
 private String estado = "A";
-    
+
+@ManyToOne
+@JoinColumn(name = "ID_ROL", nullable = false)
+private Rol rol;
 }
