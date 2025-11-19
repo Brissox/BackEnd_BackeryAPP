@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.bakery.Productos.Assembler.productoModelAssembler;
 import cl.bakery.Productos.Model.producto;
-import cl.bakery.Productos.Repository.productoRepository;
 import cl.bakery.Productos.Services.productoServices;
 
 import io.swagger.v3.oas.annotations.Operation;
