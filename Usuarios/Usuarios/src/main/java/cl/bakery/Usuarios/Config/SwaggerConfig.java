@@ -14,7 +14,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 @Configuration
 
 @OpenAPIDefinition(
-    info = @io.swagger.v3.oas.annotations.info.Info(title = "Mi primer proyecto de Microservicios en DUOC 2025", version = "2.0",
+    info = @io.swagger.v3.oas.annotations.info.Info(title = "Pasteleria Mil sabores - B2C Tech - DUOC 2025", version = "2.0",
         description = "Documentación de la API de Usuarios"),
     security = @SecurityRequirement(name = "apiKey") // Esto aplica la API Key globalmente
 )
