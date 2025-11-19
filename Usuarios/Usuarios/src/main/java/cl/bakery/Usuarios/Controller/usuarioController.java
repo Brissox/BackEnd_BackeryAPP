@@ -193,7 +193,7 @@ public class usuarioController {
         }
     }
 
-
+/* 
     //ENDPOINT PARA editar un usuario segun id
     @PutMapping("/E/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
     
@@ -205,7 +205,7 @@ public class usuarioController {
         @ApiResponse(responseCode = "200", description = "Se edito correctamente el estado del usuario", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
         @ApiResponse(responseCode = "500", description = "Usuario no esta registrado", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se puede registrar el usuario")))
     })
-
+*/
 
         @DeleteMapping("/{ID_USUARIO}")
         public ResponseEntity<String> EliminarUsuario(@PathVariable Long ID_USUARIO){
