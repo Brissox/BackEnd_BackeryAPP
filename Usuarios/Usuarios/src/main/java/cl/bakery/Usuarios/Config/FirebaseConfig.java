@@ -17,8 +17,8 @@ public class FirebaseConfig {
     @PostConstruct
     public void initializeFirebase() throws IOException {
         if (FirebaseApp.getApps().isEmpty()) {
-            FileInputStream serviceAccount =
-                    new FileInputStream("/workspaces/BackEnd_BackeryAPP/Usuarios/Usuarios/src/main/resources/bakeryweb-4145f-firebase-adminsdk-fbsvc-c453d06d6b.json");
+            FileInputStream serviceAccount = new FileInputStream(
+                    "C:\\Users\\carlo\\Documents\\GitHub\\BackEnd_BackeryAPP\\Usuarios\\Usuarios\\src\\main\\resources\\bakerymobile-5a946-firebase-adminsdk-fbsvc-cd5ea0ce55.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -30,4 +30,4 @@ public class FirebaseConfig {
     }
 }
 
-//INICIALIZACION DE FIREBASE PARA PODER USARLO EN EL PROYECTO
+// INICIALIZACION DE FIREBASE PARA PODER USARLO EN EL PROYECTO
