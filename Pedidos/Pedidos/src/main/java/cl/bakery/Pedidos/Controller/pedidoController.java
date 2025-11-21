@@ -32,11 +32,9 @@ public class pedidoController {
     
     
     @Autowired
-
     private pedidoServices pedidoservice;
 
     @Autowired
-
     private pedidoModelAssembler assembler;
 
 
@@ -114,12 +112,10 @@ public class pedidoController {
    /*  public ResponseEntity<?> ActualizarPedido(@PathVariable Long ID_PEDIDO, @RequestBody pedido pedidoActualizar){
         try {
             pedido pedidoActualizado = pedidoservice.BuscarUnPedido(ID_PEDIDO);
-            pedidoActualizado.setFecha_pedido(pedidoActualizar.getFecha_pedido());
-            pedidoActualizado.setEstado(pedidoActualizar.getEstado());
-            pedidoActualizado.setSubtotal(pedidoActualizar.getSubtotal());
-            pedidoActualizado.setId_usuario(pedidoActualizar.getId_usuario());
-            pedidoActualizado.setMetodo_pago(pedidoActualizar.getMetodo_pago());
-            pedidoActualizado.setDireccion_envio(pedidoActualizar.getDireccion_envio());
+            pedidoActualizado.setFecha(pedidoActualizar.getFecha());
+            pedidoActualizado.setVendedor(pedidoActualizar.getVendedor());
+            pedidoActualizado.setMonto(pedidoActualizar.getMonto());
+            pedidoActualizado.setCliente(pedidoActualizar.getCliente());
             pedidoservice.GuardarPedido(pedidoActualizado);
             return ResponseEntity.ok(assembler.toModel(pedidoActualizar));
         } catch (Exception e) {

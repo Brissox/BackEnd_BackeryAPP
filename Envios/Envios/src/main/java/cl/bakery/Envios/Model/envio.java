@@ -21,26 +21,26 @@ import lombok.NoArgsConstructor;
 @Schema(description="Contiene la informacion relacionada con el proceso de envio de productos")
 
 public class envio {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ENVIO")
-    @Schema(description = "Identificador del envío, se genera automáticamente")
-    private Long id_envio;
+    @Schema(description = "Identificador único del envío", example = "1")
+    private Long idEnvio;
 
     @Column(name = "ID_PEDIDO", nullable = false)
-    @Schema(description = "Identificador del pedido asociado", example = "1")
-    private Long id_pedido;
+    @Schema(description = "Identificador del pedido asociado al envío", example = "10")
+    private Long idPedido;
 
-    @Column(name = "DIRECCION_ENVIO", nullable = false, length = 200)
-    @Schema(description = "Dirección donde se entregará el pedido", example = "Av. Las Condes 1234, Santiago")
-    private String direccion_envio;
+    @Column(name = "DIRECCION_ENVIO", nullable = false, length = 150)
+    @Schema(description = "Dirección completa donde se realizará el envío", example = "Av. Los Pinos 123, Santiago")
+    private String direccionEnvio;
 
     @Column(name = "FECHA_ENVIO", nullable = false)
-    @Schema(description = "Fecha en que se envía el pedido", example = "2025-06-24T15:30:00")
-    private LocalDateTime fecha_envio;
+    @Schema(description = "Fecha y hora en que se despachó el pedido", example = "2025-11-04T14:30:00")
+    private LocalDateTime fechaEnvio;
 
     @Column(name = "FECHA_ENTREGA")
-    @Schema(description = "Fecha estimada o real de entrega del pedido", example = "2025-06-26T18:00:00")
-    private LocalDateTime fecha_entrega;
+    @Schema(description = "Fecha y hora estimada o real de entrega del pedido", example = "2025-11-06T09:00:00")
+    private LocalDateTime fechaEntrega;
+    
 }

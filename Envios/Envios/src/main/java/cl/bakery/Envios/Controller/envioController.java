@@ -109,12 +109,10 @@ public class envioController {
     public ResponseEntity<?> ActualizarEnvio(@PathVariable Long ID_ENVIO, @RequestBody envio enviosActualizar){
         try {
             envio enviosActualizado = enviosservice.BuscarUnEnvio(ID_ENVIO);
-            enviosActualizado.setNumero_guia(enviosActualizar.getNumero_guia());
-            enviosActualizado.setEstado(enviosActualizar.getEstado());
-            enviosActualizado.setFecha_entrega(enviosActualizar.getFecha_entrega());
-            enviosActualizado.setFecha_envio(enviosActualizar.getFecha_envio());
-            enviosActualizado.setId_envio(enviosActualizar.getId_envio());
-            enviosActualizado.setTransportista(enviosActualizar.getTransportista());
+            enviosActualizado.setIdPedido(enviosActualizar.getIdPedido());
+            enviosActualizado.setDireccionEnvio(enviosActualizar.getDireccionEnvio());
+            enviosActualizado.setFechaEnvio(enviosActualizar.getFechaEnvio());
+            enviosActualizado.setFechaEntrega(enviosActualizar.getFechaEntrega());
             enviosservice.GuardarEnvios(enviosActualizado);
             return ResponseEntity.ok(assembler.toModel(enviosActualizar));
         } catch (Exception e) {

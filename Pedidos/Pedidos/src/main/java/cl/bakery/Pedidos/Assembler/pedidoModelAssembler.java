@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import org.springframework.stereotype.Component;
 
 import cl.bakery.Pedidos.Controller.pedidoController;
 import cl.bakery.Pedidos.Model.pedido;
