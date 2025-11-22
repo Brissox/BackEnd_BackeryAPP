@@ -11,28 +11,34 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
+
 public class carritoServices {
 
     @Autowired
-    private carritoRepository carritorepository;
+    private carritoRepository carritoRepository;
 
-    // Buscar todos los carritos
-    public List<carrito> BuscarTodoCarritos() {
-        return carritorepository.findAll();
+    // Obtener todos los carritos
+    public List<carrito> buscarTodos() {
+        return carritoRepository.findAll();
     }
 
-    // Buscar un carrito por ID
-    public carrito BuscarUnCarrito(Long ID_CARRITO) {
-        return carritorepository.findById(ID_CARRITO).orElse(null);
+    // Buscar un carrito específico
+    public carrito buscarPorId(Long ID_CARRITO) {
+        return carritoRepository.findById(ID_CARRITO).get();
     }
 
-    // Guardar un carrito
-    public carrito GuardarCarrito(carrito carrito) {
-        return carritorepository.save(carrito);
+    // Buscar por usuario
+    public List<carrito> buscarPorUsuario(Long idUsuario) {
+        return carritoRepository.findByIdUsuario(idUsuario);
+    }
+
+    // Guardar o actualizar un carrito
+    public carrito guardarCarrito(carrito carrito) {
+        return carritoRepository.save(carrito);
     }
 
     // Eliminar un carrito
-    public void EliminarCarrito(Long ID_CARRITO) {
-        carritorepository.deleteById(ID_CARRITO);
+    public void eliminarCar(Long ID_CARRITO) {
+        carritoRepository.deleteById(ID_CARRITO);
     }
 }

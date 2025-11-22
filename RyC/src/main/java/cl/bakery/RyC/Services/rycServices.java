@@ -1,34 +1,49 @@
 package cl.bakery.RyC.Services;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
 
-import cl.bakery.RyC.Model.ryc;
 import cl.bakery.RyC.Repository.rycRepository;
+import jakarta.transaction.Transactional;
+import cl.bakery.RyC.Model.ryc;
 
 @Service
 @Transactional
-public class rycServices {
 
+public class rycServices {
+    
     @Autowired
+
     private rycRepository rycrepository;
 
-    public List<ryc> BuscarTodoRyc() {
+    public List<ryc> BuscarTodoRYC(){
         return rycrepository.findAll();
     }
 
-    public ryc BuscarUnRyc(Long idResena) {
-        return rycrepository.findById(idResena)
-            .orElseThrow(() -> new RuntimeException("Reseña no encontrada"));
+    public ryc BuscarUnRYC(Long ID_RESENA){
+        return rycrepository.findById(ID_RESENA).get();
+
     }
 
-    public ryc GuardarRyc(ryc nuevaRyc) {
-        return rycrepository.save(nuevaRyc);
+    public ryc GuardarRYC(ryc ryc){
+        return rycrepository.save(ryc);
+
     }
 
-    public void EliminarRyc(Long idResena) {
-        rycrepository.deleteById(idResena);
+    public void EliminarRYC(Long ID_RESENA){
+        rycrepository.deleteById(ID_RESENA);
     }
+
+     // Buscar por usuario
+    public List<ryc> buscarPorUsuario(Long idUsuario) {
+        return rycrepository.findByIdUsuario(idUsuario);
+    }
+
+       // Buscar por producto
+    public List<ryc> buscarPorProducto(Long idProducto) {
+        return rycrepository.findByIdProducto(idProducto);
+    }
+
 }

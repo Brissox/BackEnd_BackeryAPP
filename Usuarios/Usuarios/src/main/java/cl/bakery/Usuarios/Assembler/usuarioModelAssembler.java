@@ -16,9 +16,9 @@ public class usuarioModelAssembler implements RepresentationModelAssembler<usuar
     public EntityModel<usuario> toModel(usuario u){
         return EntityModel.of(
             u,
-             linkTo(methodOn(usuarioController.class).BuscarUsuario(u.getId_usuario())).withRel("LINKS"),
+            linkTo(methodOn(usuarioController.class).BuscarUsuario(u.getIdUsuario().intValue())).withRel("LINKS"),
             linkTo(methodOn(usuarioController.class).ListarUsuarios()).withRel("todas-los-Usuario"),
-            linkTo(methodOn(usuarioController.class).ActualizarUsuarios(u.getId_usuario(), u)).withRel("actualiza-una-pruducto")
+            linkTo(methodOn(usuarioController.class).ActualizarUsuarios(u.getIdUsuario().intValue(), u)).withRel("actualiza-usuario")
         );
     }
 }

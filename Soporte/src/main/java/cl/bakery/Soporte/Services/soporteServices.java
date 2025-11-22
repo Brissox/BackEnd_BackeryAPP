@@ -10,24 +10,34 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
+
 public class soporteServices {
-
+    
     @Autowired
-    private soporteRepository soporteRepository;
 
-    public List<soporte> BuscarTodoSoportes() {
-        return soporteRepository.findAll();
+    private soporteRepository soporterepository;
+
+    public List<soporte> BuscarTodoSoporte(){
+        return soporterepository.findAll();
     }
 
-    public soporte BuscarUnSoporte(Long idSoporte) {
-        return soporteRepository.findById(idSoporte).orElse(null);
+    public soporte BuscarUnSoporte(Long ID_SOPORTE){
+        return soporterepository.findById(ID_SOPORTE).get();
+
     }
 
-    public soporte GuardarSoporte(soporte soporte) {
-        return soporteRepository.save(soporte);
+    public soporte GuardarSoporte(soporte soporte){
+        return soporterepository.save(soporte);
+
     }
 
-    public void EliminarSoporte(Long idSoporte) {
-        soporteRepository.deleteById(idSoporte);
+    public void EliminarSoporte(Long ID_SOPORTE){
+        soporterepository.deleteById(ID_SOPORTE);
     }
+
+     // Buscar por usuario
+    public List<soporte> buscarPorUsuario(Long idUsuario) {
+        return soporterepository.findByIdUsuario(idUsuario);
+    }
+
 }
