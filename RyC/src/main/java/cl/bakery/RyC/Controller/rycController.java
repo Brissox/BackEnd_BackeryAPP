@@ -141,7 +141,7 @@ public class rycController {
             rycActualizado.setCalificacion(rycActualizar.getCalificacion());
             rycActualizado.setComentario(rycActualizar.getComentario());
             rycActualizado.setResena(rycActualizar.getResena());
-            rycActualizado.setId_producto(rycActualizar.getId_producto());
+            rycActualizado.setIdProducto(rycActualizar.getIdProducto());
             rycservices.GuardarRYC(rycActualizado);
             return ResponseEntity.ok(assambler.toModel(rycActualizado));
         } catch (Exception e) {

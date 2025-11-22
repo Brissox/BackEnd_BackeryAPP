@@ -2,13 +2,9 @@ package cl.bakery.RyC.Model;
 
 
 import java.sql.Date;
-import java.time.LocalDateTime;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class ryc {
     
     @Id
-   @Column(name = "ID_RESENA", nullable = false)
+    @Column(name = "ID_RESENA", nullable = false)
     @Schema(description = "Identificador único de la reseña", example = "1")
     private Long id_resena;
 
@@ -36,7 +32,7 @@ public class ryc {
 
     @Column(name = "ID_PRODUCTO", nullable = false)
     @Schema(description = "Identificador del producto reseñado", example = "501")
-    private Long id_producto;
+    private Long idProducto;
 
     @Column(name = "CALIFICACION", nullable = false)
     @Schema(description = "Puntaje de la reseña (1 a 5 estrellas)", example = "5")

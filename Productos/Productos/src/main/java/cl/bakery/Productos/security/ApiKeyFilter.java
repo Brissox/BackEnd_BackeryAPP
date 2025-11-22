@@ -1,6 +1,5 @@
 package cl.bakery.Productos.security;
 
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -67,7 +66,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-
+        // continuar con la cadena
         filterChain.doFilter(request, response);
     }
 }
