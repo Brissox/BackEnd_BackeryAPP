@@ -67,7 +67,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        // continuar con la cadena
+
         filterChain.doFilter(request, response);
     }
 }

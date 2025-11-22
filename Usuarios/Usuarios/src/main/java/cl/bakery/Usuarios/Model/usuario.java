@@ -98,6 +98,6 @@ private String dv;
 private String estado = "A";
 
 @ManyToOne
-@JoinColumn(name = "ID_ROL", nullable = false)
+@JoinColumn(name = "ID_ROL", nullable = true)
 private Rol rol;
 }
