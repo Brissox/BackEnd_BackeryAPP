@@ -5,8 +5,6 @@ import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import cl.bakery.Usuarios.DTO.EditarUsuarioAdminDTO;
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
 import cl.bakery.Usuarios.Model.Rol;
 import cl.bakery.Usuarios.Model.usuario;
@@ -77,12 +75,4 @@ public class usuarioServices {
         return usuarioRepository.save(usuario);
     }
 
-    public Rol buscarRolPorId(Long idRol) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarRolPorId'");
-    }
-    public usuario actualizarUsuarioAdmin(usuario usuarioExistente, EditarUsuarioAdminDTO datos) {
-    // Todo el bloque que ya escribiste de setNombre, setTelefono, setFechaNacimiento...
-    return usuarioRepository.save(usuarioExistente);
-}
 }
