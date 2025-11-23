@@ -22,7 +22,9 @@ import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
+import cl.bakery.Usuarios.DTO.EditarUsuarioAdminDTO;
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
+import cl.bakery.Usuarios.Model.Rol;
 import cl.bakery.Usuarios.Model.usuario;
 import cl.bakery.Usuarios.Services.usuarioServices;
 import io.swagger.v3.oas.annotations.Operation;
@@ -321,6 +323,85 @@ public class usuarioController {
      * }
      * 
      */
+@PutMapping("/Admin/{ID_USUARIO}")
+@Operation(summary = "Editar usuario por un admin, incluyendo rol")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente"),
+    @ApiResponse(responseCode = "403", description = "No autorizado"),
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+    @ApiResponse(responseCode = "400", description = "Error al actualizar usuario")
+})
+public ResponseEntity<?> actualizarUsuarioAdmin(
+        @PathVariable Integer ID_USUARIO,
+        @RequestHeader("Authorization") String authHeader,
+        @RequestBody EditarUsuarioAdminDTO datos) {
+
+    try {
+        // 1️⃣ Validar token y obtener UID
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no proporcionado");
+        }
+        String idToken = authHeader.replace("Bearer ", "").trim();
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+        String uidFirebase = decodedToken.getUid();
+
+        // 2️⃣ Verificar si el usuario que hace la petición es admin
+        usuario usuarioAdmin = usuarioservices.buscarUsuarioUID(uidFirebase);
+        if (usuarioAdmin == null || usuarioAdmin.getRol() == null || 
+            !usuarioAdmin.getRol().getNombreRol().equalsIgnoreCase("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No autorizado");
+        }
+
+        // 3️⃣ Obtener usuario a actualizar
+        usuario usuarioExistente = usuarioservices.BuscarUnUsuario(ID_USUARIO);
+        if (usuarioExistente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        // 4️⃣ Actualizar campos
+        usuarioExistente.setNombre(datos.getNombre());
+        usuarioExistente.setApellidoPaterno(datos.getApellidoPaterno());
+        usuarioExistente.setApellidoMaterno(datos.getApellidoMaterno());
+        usuarioExistente.setCorreo(datos.getCorreo());
+        usuarioExistente.setTelefono((long) datos.getTelefono());
+
+        // Fecha de nacimiento
+        if (datos.getFechaNacimiento() != null && !datos.getFechaNacimiento().isBlank()) {
+            try {
+                java.sql.Date fecha = java.sql.Date.valueOf(datos.getFechaNacimiento());
+                usuarioExistente.setFechaNacimiento(fecha);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Formato de fechaNacimiento inválido. Se espera 'yyyy-MM-dd'");
+            }
+        } else {
+            usuarioExistente.setFechaNacimiento(null);
+        }
+
+        usuarioExistente.setPais(datos.getPais());
+        usuarioExistente.setCiudad(datos.getCiudad());
+        usuarioExistente.setDireccion(datos.getDireccion());
+        usuarioExistente.setEstado(datos.getEstado());
+
+        // 5️⃣ Actualizar rol
+        Rol nuevoRol = usuarioservices.buscarRolPorId(datos.getIdRol());
+        if (nuevoRol == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rol no válido");
+        }
+        usuarioExistente.setRol(nuevoRol);
+
+        // 6️⃣ Guardar cambios
+        usuarioservices.GuardarUsuario(usuarioExistente);
+
+        return ResponseEntity.ok(assambler.toModel(usuarioExistente));
+
+    } catch (FirebaseAuthException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido: " + e.getMessage());
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al actualizar usuario: " + e.getMessage());
+    }
+}
 
 
 }
