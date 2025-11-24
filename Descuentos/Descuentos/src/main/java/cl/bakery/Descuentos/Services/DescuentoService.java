@@ -3,6 +3,7 @@ package cl.bakery.Descuentos.Services;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -78,9 +79,16 @@ public class DescuentoService {
         if ("FELICES50".equals(dto.getCodigoRegistro()))
             asignar(dto.getIdUsuario(), "FELICES50");
 
-        
         if (dto.getCorreo() != null && dto.getCorreo().endsWith("@duocuc.cl"))
-            asignar(dto.getIdUsuario(), "DUOC_CUMPLE");
+            asignar(dto.getIdUsuario(), "DUOC_BDAY");
+    }
+
+    public List<descuento> obtenerDescuentosPorUsuario(Long idUsuario) {
+        List<UsuarioDescuento> relaciones = usuarioDescuentoRepository.findByIdUsuario(idUsuario);
+        return relaciones.stream()
+                .map(rel -> repository.findById(rel.getIdDescuento())
+                        .orElseThrow(() -> new RuntimeException("Descuento no encontrado")))
+                .collect(Collectors.toList());
     }
 
 }

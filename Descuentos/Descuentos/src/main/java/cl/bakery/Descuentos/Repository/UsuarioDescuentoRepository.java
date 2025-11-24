@@ -11,5 +11,7 @@ public interface UsuarioDescuentoRepository extends JpaRepository<UsuarioDescuen
 
     boolean existsByIdUsuarioAndIdDescuento(Long idUsuario, Long idDescuento);
 
+    java.util.List<UsuarioDescuento> findByIdUsuario(Long idUsuario);
+
     
 }
