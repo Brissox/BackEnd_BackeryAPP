@@ -80,7 +80,7 @@ public class DescuentoService {
             asignar(dto.getIdUsuario(), "FELICES50");
 
         if (dto.getCorreo() != null && dto.getCorreo().endsWith("@duocuc.cl"))
-            asignar(dto.getIdUsuario(), "DUOC_BDAY");
+            asignar(dto.getIdUsuario(), "DUOC_CUMPLE");
     }
 
     public List<descuento> obtenerDescuentosPorUsuario(Long idUsuario) {

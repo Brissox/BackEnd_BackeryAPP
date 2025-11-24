@@ -178,7 +178,7 @@ public class usuarioController {
                         usuarioRegistrado.getCorreo(),
                         usuarioRegistrado.getFechaNacimiento() == null 
                         ? null 
-                        : usuarioRegistrado.getFechaNacimiento().toLocalDate());
+                        : usuarioRegistrado.getFechaNacimiento());
             } catch (Exception ex) {
                 System.out.println("No se pudieron asignar descuentos: " + ex.getMessage());
                 // Continuar sin frenar el registro
