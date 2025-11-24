@@ -16,8 +16,8 @@ public class carritoModelAssembler implements RepresentationModelAssembler<carri
     public EntityModel<carrito> toModel(carrito c) {
         return EntityModel.of(
             c,
-            linkTo(methodOn(carritoController.class).buscarCarrito(c.getIdCarrito())).withRel("LINKS"),
-            linkTo(methodOn(carritoController.class).listarTodo()).withRel("todos-los-carritos")
+            linkTo(methodOn(carritoController.class).buscarCarrito(c.getId_carrito())).withRel("LINKS")
+           //linkTo(methodOn(carritoController.class).listarTodo()).withRel("todos-los-carritos")
             // Puedes agregar otros enlaces si luego implementas actualizar o eliminar
         );
     }

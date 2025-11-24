@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Todos los pedidos registrados en la empresa")
-public class pedido { // 👈 Nombre de clase con mayúscula, buena práctica en Java
 
 public class pedido {
 
