@@ -89,6 +89,16 @@
             "projectName": "Usuarios",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DescuentosApplication<Autenticacion-Registro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.bakery.Descuentos.DescuentosApplication",
+            "projectName": "Autenticacion-Registro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

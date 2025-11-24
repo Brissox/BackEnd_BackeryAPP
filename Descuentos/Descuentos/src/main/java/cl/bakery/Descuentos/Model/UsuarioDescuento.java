@@ -1,6 +1,6 @@
 package cl.bakery.Descuentos.Model;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -13,29 +13,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
-
 @Entity
-@Table(name="descuentos")
+@Table(name = "usuario_descuento")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los descuentos en la empresa")
-public class descuento {
+@Schema(description = "Tabla intermedia entre usuarios y descuentos")
+public class UsuarioDescuento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String codigo;
+    @Column(name = "id_usuario", nullable = false)
+    private Long idUsuario;
 
-    @Column(length = 255)
-    private String descripcion;
+    @Column(name = "id_descuento", nullable = false)
+    private Long idDescuento;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal porcentaje;
+    @Column(name = "fecha_asignacion")
+    private LocalDate fechaAsignacion;
 
 }
-

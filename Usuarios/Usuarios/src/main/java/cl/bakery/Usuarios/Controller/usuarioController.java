@@ -24,6 +24,7 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
 import cl.bakery.Usuarios.Model.usuario;
+import cl.bakery.Usuarios.Services.DescuentoClientService;
 import cl.bakery.Usuarios.Services.usuarioServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -42,6 +43,8 @@ public class usuarioController {
     private usuarioServices usuarioservices;
     @Autowired
     private usuarioModelAssembler assambler;
+    @Autowired
+    private DescuentoClientService descuentoClientService;
 
     // ENDPOINT PARA listar todos los usuarios
     // Funcionamiento verificado || FUNCIONANDO
@@ -167,6 +170,20 @@ public class usuarioController {
             usuarioNuevo.setUidFb(uid);
             usuario usuarioRegistrado = usuarioservices.GuardarUsuario(usuarioNuevo);
 
+            // Intentar asignar descuentos
+            try {
+                descuentoClientService.asignarDescuentosAlUsuario(
+                        usuarioRegistrado.getIdUsuario(),
+                        usuarioRegistrado.getCodigoDesc(),
+                        usuarioRegistrado.getCorreo(),
+                        usuarioRegistrado.getFechaNacimiento() == null 
+                        ? null 
+                        : usuarioRegistrado.getFechaNacimiento().toLocalDate());
+            } catch (Exception ex) {
+                System.out.println("No se pudieron asignar descuentos: " + ex.getMessage());
+                // Continuar sin frenar el registro
+            }
+
             return ResponseEntity.ok(assambler.toModel(usuarioRegistrado));
 
         } catch (Exception e) {
@@ -176,7 +193,7 @@ public class usuarioController {
                     FirebaseAuth.getInstance().deleteUser(firebaseUid);
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    System.out.println("⚠ Error eliminando usuario en Firebase durante rollback: " + ex.getMessage());
+                    System.out.println("Error eliminando usuario en Firebase durante rollback: " + ex.getMessage());
                 }
             }
 

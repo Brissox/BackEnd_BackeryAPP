@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 import cl.bakery.Descuentos.Model.descuento;
 
 @Repository
-public interface DescuentoRepository extends JpaRepository<descuento, Integer> {
-
-    // si quieres buscar por código
+public interface DescuentoRepository extends JpaRepository<descuento, Long> {
     boolean existsByCodigo(String codigo);
-
     descuento findByCodigo(String codigo);
 }
