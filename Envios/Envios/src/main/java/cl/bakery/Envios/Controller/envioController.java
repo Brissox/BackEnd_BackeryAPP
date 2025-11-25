@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-
 @RestController
 @RequestMapping("/api/v1/Envios")
 public class envioController {
@@ -95,7 +94,7 @@ public class envioController {
     }
     }
 
-    // ENDPOINT PARA EDITAR UN ENVIO
+  /*   // ENDPOINT PARA EDITAR UN ENVIO
     @PutMapping("/{ID_ENVIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
 
     @Operation(summary = "ENDPOINT QUE EDITA UN ENVIO", description = "ENDPOINT QUE EDITA UN ENVIO", requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(description="ENVIO QUE SE VA A REGISTRAR", required = true, content = @Content(schema = @Schema(implementation = envio.class))))
@@ -121,7 +120,7 @@ public class envioController {
         }
     }
     
-
+*/  
 } /*
     @GetMapping
     public ResponseEntity<List<envioUsuarioDTO>> listar() {

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
+import cl.bakery.Usuarios.Model.Rol;
 import cl.bakery.Usuarios.Model.usuario;
 import cl.bakery.Usuarios.Services.DescuentoClientService;
 import cl.bakery.Usuarios.Services.usuarioServices;
@@ -78,7 +80,9 @@ public class usuarioController {
     public ResponseEntity<?> BuscarUsuario(@PathVariable Integer ID_USUARIO) {
 
         try {
+
             usuario usuarioBuscado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
+
             return ResponseEntity.ok(assambler.toModel(usuarioBuscado));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra Usuario");
@@ -106,7 +110,7 @@ public class usuarioController {
     }
 
     // ENDPOINT PARA editar un usuario segun id
-    @PutMapping("/G/{ID_USUARIO}") // SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
+    @PutMapping("/{ID_USUARIO}") // SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS LOS DATOS
 
     @Operation(summary = "ENDPOINT QUE EDITA UN USUARIO", description = "ENDPOINT QUE EDITA UN USUARIO", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "USUARIO QUE SE VA A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
     @Parameters(value = {
@@ -317,6 +321,7 @@ public class usuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
         }
     }
+
     /*
      * @PutMapping("/{uid}")
      * 
@@ -338,5 +343,72 @@ public class usuarioController {
      * }
      * 
      */
+    @PatchMapping("/{ID_USUARIO}")
+    @Operation(summary = "ENDPOINT QUE EDITA PARCIALMENTE UN USUARIO", description = "PERMITE EDITAR SOLO LOS CAMPOS ENVIADOS", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "CAMPOS DEL USUARIO A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
+    @Parameters(value = {
+            @Parameter(name = "ID_USUARIO", description = "ID del usuario que se editara", in = ParameterIn.PATH, required = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario editado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+            @ApiResponse(responseCode = "403", description = "Usuario carlitos gay"),
+    })
+    public ResponseEntity<?> ActualizarParcialUsuario(
+            @PathVariable Integer ID_USUARIO,
+            @RequestBody usuario usuarioActualizarParcial) {
 
+        try {
+            System.out.println("carlitos gay");
+            usuario usuarioActual = usuarioservices.BuscarUnUsuario(ID_USUARIO);
+
+            if (usuarioActualizarParcial.getNombre() != null)
+                usuarioActual.setNombre(usuarioActualizarParcial.getNombre());
+
+            if (usuarioActualizarParcial.getApellidoPaterno() != null)
+                usuarioActual.setApellidoPaterno(usuarioActualizarParcial.getApellidoPaterno());
+
+            if (usuarioActualizarParcial.getApellidoMaterno() != null)
+                usuarioActual.setApellidoMaterno(usuarioActualizarParcial.getApellidoMaterno());
+
+            if (usuarioActualizarParcial.getFechaNacimiento() != null)
+                usuarioActual.setFechaNacimiento(usuarioActualizarParcial.getFechaNacimiento());
+
+            if (usuarioActualizarParcial.getCorreo() != null)
+                usuarioActual.setCorreo(usuarioActualizarParcial.getCorreo());
+
+            if (usuarioActualizarParcial.getDireccion() != null)
+                usuarioActual.setDireccion(usuarioActualizarParcial.getDireccion());
+
+            if (usuarioActualizarParcial.getTelefono() != null)
+                usuarioActual.setTelefono(usuarioActualizarParcial.getTelefono());
+
+            if (usuarioActualizarParcial.getContrasena() != null)
+                usuarioActual.setContrasena(usuarioActualizarParcial.getContrasena());
+
+            if (usuarioActualizarParcial.getRun() != null)
+                usuarioActual.setRun(usuarioActualizarParcial.getRun());
+
+            if (usuarioActualizarParcial.getDv() != null)
+                usuarioActual.setDv(usuarioActualizarParcial.getDv());
+
+            if (usuarioActualizarParcial.getEstado() != null)
+                usuarioActual.setEstado(usuarioActualizarParcial.getEstado());
+
+            if (usuarioActualizarParcial.getPais() != null)
+                usuarioActual.setPais(usuarioActualizarParcial.getPais());
+
+            if (usuarioActualizarParcial.getCiudad() != null)
+                usuarioActual.setCiudad(usuarioActualizarParcial.getCiudad());
+
+            if (usuarioActualizarParcial.getCodigoDesc() != null)
+                usuarioActual.setCodigoDesc(usuarioActualizarParcial.getCodigoDesc());
+
+            usuarioservices.GuardarUsuario(usuarioActual);
+
+            return ResponseEntity.ok(assambler.toModel(usuarioActual));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no esta registrado");
+        }
+    }
 }

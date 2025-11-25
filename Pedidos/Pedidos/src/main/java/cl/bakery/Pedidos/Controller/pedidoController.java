@@ -113,7 +113,7 @@ public class pedidoController {
     }
 
 // ENDPOINT PARA EDITAR UN PEDIDO
-    @PutMapping("/{ID_PEDIDO}")
+  /*   @PutMapping("/{ID_PEDIDO}")
 
     @Operation(summary = "ENDPOINT QUE EDITA UN PEDIDO", description = "ENDPOINT QUE EDITA UN PEDIDO", requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(description="PEDIDO QUE SE VA A REGISTRAR", required = true, content = @Content(schema = @Schema(implementation = pedido.class))))
     @Parameters (value = {
@@ -123,7 +123,7 @@ public class pedidoController {
         @ApiResponse(responseCode = "200", description = "Se edito correctamente el pedido", content = @Content(mediaType = "application/json", schema = @Schema(implementation = pedido.class))),
         @ApiResponse(responseCode = "500", description = "Pedido no esta registrado", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se puede registrar el pedido")))   
     })
-    public ResponseEntity<?> ActualizarPedido(@PathVariable Long ID_PEDIDO, @RequestBody pedido pedidoActualizar){
+   /*  public ResponseEntity<?> ActualizarPedido(@PathVariable Long ID_PEDIDO, @RequestBody pedido pedidoActualizar){
         try {
             pedido pedidoActualizado = pedidoservice.BuscarUnPedido(ID_PEDIDO);
             pedidoActualizado.setFecha(pedidoActualizar.getFecha());

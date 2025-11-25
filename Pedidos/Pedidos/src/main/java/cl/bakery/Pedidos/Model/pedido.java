@@ -19,14 +19,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Entity
-@Table(name="PEDIDOS")
+@Table(name = "PEDIDOS", schema = "ADMIN") // 👈 IMPORTANTE: fuerza el esquema correcto
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description="Todos los pedidos registrados en la empresa")
+@Schema(description = "Todos los pedidos registrados en la empresa")
 
 public class pedido {
 

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los productos registrados en la empresa")
+@Schema(description = "Todos los Usuarios registrados en la empresa")
 
 public class usuario {
 
@@ -99,6 +99,6 @@ private String dv;
 private String estado = "A";
 
 @ManyToOne
-@JoinColumn(name = "ID_ROL", nullable = false)
+@JoinColumn(name = "ID_ROL", nullable = true)
 private Rol rol;
 }

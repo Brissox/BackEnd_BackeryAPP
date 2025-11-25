@@ -1,6 +1,7 @@
 package cl.bakery.Pagos.Model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,11 +17,11 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name="Pago")
+@Table(name="PAGOS")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Todos los productos registrados en la empresa")
+@Schema(description = "Todos los pagos registrados en la empresa")
 
 public class pago {
 
@@ -39,7 +40,7 @@ public class pago {
     private String metodoPago;
 
     @Column(name = "FECHA_PAGO", nullable = false)
-    private LocalDateTime fechaPago;
+    private LocalDate fechaPago;
 
     @Column(name = "ESTADO_PAGO", nullable = false, length = 20)
     private String estadoPago;
