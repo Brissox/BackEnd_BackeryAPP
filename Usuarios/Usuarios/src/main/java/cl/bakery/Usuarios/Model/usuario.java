@@ -1,6 +1,6 @@
 package cl.bakery.Usuarios.Model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name="USUARIO")
@@ -66,7 +67,7 @@ private Long telefono;
 
 @Column(name = "FECHA_NACIMIENTO")
 @Schema(description = "Fecha de nacimiento", example = "1990-05-21")
-private Date fechaNacimiento;
+private LocalDate fechaNacimiento;
 
 @Column(name = "PAIS", length = 30)
 @Schema(description = "País del usuario", example = "Chile")

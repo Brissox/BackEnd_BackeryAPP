@@ -1,4 +1,4 @@
-package cl.bakery.Productos.Config;
+package cl.bakery.Descuentos.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

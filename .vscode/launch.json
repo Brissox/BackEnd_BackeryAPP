@@ -105,6 +105,16 @@
         },
         {
             "type": "java",
+            "name": "Spring Boot-DescuentosApplication<Autenticacion-Registro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.bakery.Descuentos.DescuentosApplication",
+            "projectName": "Descuentos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-DcarritoApplication<Dcarrito>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

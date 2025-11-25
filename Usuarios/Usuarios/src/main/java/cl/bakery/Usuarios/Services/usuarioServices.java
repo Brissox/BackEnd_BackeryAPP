@@ -1,7 +1,7 @@
 package cl.bakery.Usuarios.Services;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,9 +60,9 @@ public class usuarioServices {
             usuario.setFechaNacimiento(null);
         } else {
             try {
-                Date parsed = Date.valueOf(datos.getFechaNacimiento()); 
-                usuario.setFechaNacimiento(parsed); 
-            } catch (IllegalArgumentException ex) {
+                LocalDate parsed = LocalDate.parse(datos.getFechaNacimiento());
+                usuario.setFechaNacimiento(parsed);
+            } catch (Exception ex) {
                 throw new RuntimeException("Formato de fechaNacimiento inválido. Se espera 'yyyy-MM-dd'", ex);
             }
         }

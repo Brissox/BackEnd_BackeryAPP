@@ -1,5 +1,6 @@
 Puertos de cada microservicio
 
+
 USUARIO = 8081 
 SOPORTE = 8082
 RYC = 8083
@@ -7,4 +8,5 @@ PRODUCTOS = 8084
 PEDIDOS = 8085
 PAGOS = 8086
 ENVIOS = 8087
-CARRITO = 8088 
+CARRITO = 8088
+Descuentos = 8089 
