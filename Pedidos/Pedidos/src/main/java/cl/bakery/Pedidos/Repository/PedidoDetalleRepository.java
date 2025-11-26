@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import cl.bakery.Pedidos.Model.PedidoDetalle;
+import cl.bakery.Pedidos.Model.ItemPedido;
 
 @Repository
-public interface PedidoDetalleRepository extends JpaRepository<PedidoDetalle, Long> {
+public interface PedidoDetalleRepository extends JpaRepository<ItemPedido, Long> {
 
     // Traer detalles por pedido
-    List<PedidoDetalle> findByPedidoId(Long idPedido);
+    List<ItemPedido> findByPedidoId(Long idPedido);
 }

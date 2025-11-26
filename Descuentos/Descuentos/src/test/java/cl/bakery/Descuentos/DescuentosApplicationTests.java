@@ -1,10 +1,10 @@
-package cl.bakery.Envios;
+package cl.bakery.Descuentos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EnviosApplicationTests {
+class DescuentosApplicationTests {
 
 	@Test
 	void contextLoads() {

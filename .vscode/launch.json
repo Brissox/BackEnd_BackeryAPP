@@ -2,23 +2,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "DcarritoApplication",
-            "request": "launch",
-            "mainClass": "cl.bakery.Dcarrito.DcarritoApplication",
-            "projectName": ""
-        },
-        {
-            "type": "java",
-            "name": "Spring Boot-AutenticacionRegistroApplication<Autenticacion-Registro>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "cl.bakery.Autenticacion_Registro.AutenticacionRegistroApplication",
-            "projectName": "Autenticacion-Registro",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
             "name": "Spring Boot-CarritoApplication<Carrito>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -107,7 +90,7 @@
         },
         {
             "type": "java",
-            "name": "Spring Boot-DescuentosApplication<Autenticacion-Registro>",
+            "name": "Spring Boot-DescuentosApplication<Descuentos>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "cl.bakery.Descuentos.DescuentosApplication",

@@ -44,7 +44,8 @@ public class PedidoService {
             ProductoDTO producto = productosClient.obtenerProducto(det.getIdProducto());
 
             if (producto.getStock() < det.getCantidad()) {
-                throw new RuntimeException("Stock insuficiente para " + producto.getNombre());
+                throw new IllegalArgumentException("Stock insuficiente para " + producto.getNombre());
+
             }
 
             // Descontar stock en el microservicio de productos
@@ -59,7 +60,7 @@ public class PedidoService {
             ItemPedido item = new ItemPedido();
             item.setIdProducto(det.getIdProducto());
             item.setCantidad(det.getCantidad());
-            item.setNombreProducto(producto.getNombre()); 
+            item.setNombreProducto(producto.getNombre());
             item.setPrecioUnitario(precioUnitario);
             item.setSubtotal(subtotal);
             item.setPedido(pedido);
@@ -70,7 +71,8 @@ public class PedidoService {
         // Aplicar descuentos si vienen
         if (dto.getDescuentos() != null) {
             total -= dto.getDescuentos();
-            if (total < 0) total = 0; // evitar totales negativos
+            if (total < 0)
+                total = 0; // evitar totales negativos
         }
 
         // Asignar totales e ítems
