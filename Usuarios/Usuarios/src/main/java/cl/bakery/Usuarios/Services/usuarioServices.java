@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
-import cl.bakery.Usuarios.Model.Rol;
 import cl.bakery.Usuarios.Model.usuario;
 import cl.bakery.Usuarios.Repository.usuarioRepository;
 import jakarta.transaction.Transactional;

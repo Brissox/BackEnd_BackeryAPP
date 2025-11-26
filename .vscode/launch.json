@@ -69,7 +69,8 @@
             "mainClass": "cl.bakery.Productos.ProductosApplication",
             "projectName": "Productos",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64930 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Productos"
         },
         {
             "type": "java",
@@ -101,7 +102,8 @@
             "mainClass": "cl.bakery.Usuarios.UsuariosApplication",
             "projectName": "Usuarios",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64927 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=Usuarios"
         },
         {
             "type": "java",
@@ -120,6 +122,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "cl.bakery.Dcarrito.DcarritoApplication",
             "projectName": "Dcarrito",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DescuentosApplication<Autenticacion-Registro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.bakery.Descuentos.DescuentosApplication",
+            "projectName": "Autenticacion-Registro",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
