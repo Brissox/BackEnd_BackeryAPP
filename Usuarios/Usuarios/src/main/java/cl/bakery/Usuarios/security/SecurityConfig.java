@@ -11,33 +11,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private ApiKeyFilter apiKeyFilter;
+        @Autowired
+        private ApiKeyFilter apiKeyFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+                http.cors(cors -> {
+                });
 
-        http.cors(cors -> {});
+                http.csrf(csrf -> csrf.disable());
 
-        http.csrf(csrf -> csrf.disable());
+                http.sessionManagement(
+                                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.sessionManagement(
-                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+                http.authorizeHttpRequests(auth -> auth
+                                .requestMatchers(
+                                                "/swagger-ui/**",
+                                                "/swagger-ui.html",
+                                                "/v3/api-docs/**",
+                                                "/doc/**",
+                                                "/Usuarios/**" // ← AGREGA ESTO SI QUIERES QUE NO PIDA API-KEY
 
-        http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/v3/api-docs/**",
-                        "/doc/**"
-                ).permitAll()     // ← PERMITIR SWAGGER COMPLETO
-                .anyRequest().authenticated()
-        );
+                                ).permitAll() // ← PERMITIR SWAGGER COMPLETO
+                                .anyRequest().authenticated());
 
-        http.addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 }

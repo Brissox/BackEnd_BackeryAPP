@@ -32,8 +32,8 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
@@ -41,8 +41,8 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         // permitir Swagger sin API Key
         if (path.contains("/swagger-ui") ||
-            path.contains("/v3/api-docs") ||
-            path.contains("/doc")) {
+                path.contains("/v3/api-docs") ||
+                path.contains("/doc")) {
 
             filterChain.doFilter(request, response);
             return;
@@ -58,11 +58,17 @@ public class ApiKeyFilter extends OncePerRequestFilter {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().write("API KEY INVALIDA O AUSENTE");
             return;
+        } 
+        
+        // permitir preflight CORS sin API Key
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
         // 🔥 MARCAR COMO AUTENTICADO
-        UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken("apikey-user", null, Collections.emptyList());
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken("apikey-user", null,
+                Collections.emptyList());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 

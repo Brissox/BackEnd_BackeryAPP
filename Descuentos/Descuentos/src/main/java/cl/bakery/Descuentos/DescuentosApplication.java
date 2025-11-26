@@ -1,13 +1,13 @@
-package cl.bakery.Autenticacion_Registro;
+package cl.bakery.Descuentos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AutenticacionRegistroApplication {
+public class DescuentosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AutenticacionRegistroApplication.class, args);
+		SpringApplication.run(DescuentosApplication.class, args);
 	}
 
 }

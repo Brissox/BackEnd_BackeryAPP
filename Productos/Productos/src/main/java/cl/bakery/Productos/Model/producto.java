@@ -54,7 +54,7 @@ public class producto {
     @Schema(description="Cantidad disponible en inventario",example="11222333")
     private int stock;
 
-    @Column(name = "ENLACEIMG",nullable= false , length = 50)
+    @Column(name = "ENLACEIMG",nullable= false , length = 255)
     @Schema(description ="Enlace o URL de la imagen del producto", example="123123a")
     private String enlaceimg;
 
