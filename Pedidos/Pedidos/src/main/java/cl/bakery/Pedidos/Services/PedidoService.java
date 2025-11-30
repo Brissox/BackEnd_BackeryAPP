@@ -27,7 +27,7 @@ public class PedidoService {
     @Transactional
     public Pedido crearPedido(CrearPedidoDTO dto) {
 
-        // Crear el pedido base
+        // Crear el pedido
         Pedido pedido = new Pedido();
         pedido.setIdUsuario(dto.getIdUsuario() != null ? dto.getIdUsuario() : 0L);
         pedido.setCantidadProductos(dto.getCantidad_productos());
@@ -81,6 +81,22 @@ public class PedidoService {
 
         // Guardar el pedido
         return pedidoRepository.save(pedido);
+    }
+
+    @Transactional
+    public List<Pedido> obtenerTodos() {
+        return pedidoRepository.findAll();
+    }
+
+    @Transactional
+    public List<Pedido> obtenerPorUsuario(Long idUsuario) {
+        return pedidoRepository.findByIdUsuario(idUsuario);
+    }
+
+    @Transactional
+    public Pedido obtenerPedidoPorId(Long idPedido) {
+        return pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + idPedido));
     }
 
 }

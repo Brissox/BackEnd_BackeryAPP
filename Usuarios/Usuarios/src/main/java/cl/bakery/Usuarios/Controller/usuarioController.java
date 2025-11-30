@@ -24,7 +24,6 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 
 import cl.bakery.Usuarios.Assembler.usuarioModelAssembler;
 import cl.bakery.Usuarios.DTO.EditarUsuarioDTO;
-import cl.bakery.Usuarios.Model.Rol;
 import cl.bakery.Usuarios.Model.usuario;
 import cl.bakery.Usuarios.Services.DescuentoClientService;
 import cl.bakery.Usuarios.Services.usuarioServices;
@@ -180,9 +179,9 @@ public class usuarioController {
                         usuarioRegistrado.getIdUsuario(),
                         usuarioRegistrado.getCodigoDesc(),
                         usuarioRegistrado.getCorreo(),
-                        usuarioRegistrado.getFechaNacimiento() == null 
-                        ? null 
-                        : usuarioRegistrado.getFechaNacimiento());
+                        usuarioRegistrado.getFechaNacimiento() == null
+                                ? null
+                                : usuarioRegistrado.getFechaNacimiento());
             } catch (Exception ex) {
                 System.out.println("No se pudieron asignar descuentos: " + ex.getMessage());
                 // Continuar sin frenar el registro
@@ -209,11 +208,14 @@ public class usuarioController {
 
     // Funcionamiento verificado || FUNCIONANDO
     @GetMapping("/Personal")
-    @Operation(summary = "Devuelve el usuario autenticado y sus datos mediante Firebase")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario encontrado", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "401", description = "Token inválido o ausente"),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado en la BD")
+    @Operation(summary = "Devuelve el usuario autenticado", description = "Obtiene el usuario usando el token de Firebase enviado en el header Authorization")
+    @Parameters(value = {
+            @Parameter(name = "Authorization", description = "Token JWT proveniente de Firebase. Formato: Bearer <token>", in = ParameterIn.HEADER, required = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
+            @ApiResponse(responseCode = "401", description = "Token inválido o ausente", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Token inválido"))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado en la BD", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Usuario no registrado en la BD")))
     })
     public ResponseEntity<?> obtenerUsuarioActual(@RequestHeader("Authorization") String authHeader) {
 
@@ -241,12 +243,14 @@ public class usuarioController {
         }
     }
 
-    // Funcionamiento verificado || FUNCIONANDO
     @PutMapping("/Editar")
-    @Operation(summary = "Edita los datos del usuario autenticado (excepto rol, run, dv, nombre, uidFb e idUsuario)")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente"),
-            @ApiResponse(responseCode = "400", description = "Error en la actualización"),
+    @Operation(summary = "Edita los datos del usuario autenticado", description = "Permite editar apellido, correo, dirección, teléfono, etc. No permite editar: id, rol, run, dv, uidFb.")
+    @Parameters(value = {
+            @Parameter(name = "Authorization", description = "Token JWT enviado por Firebase. Formato: Bearer <token>", in = ParameterIn.HEADER, required = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
+            @ApiResponse(responseCode = "400", description = "Error al actualizar usuario"),
             @ApiResponse(responseCode = "401", description = "Token inválido o ausente"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado en la BD")
     })
@@ -281,37 +285,16 @@ public class usuarioController {
         }
     }
 
-    /*
-     * //ENDPOINT PARA editar un usuario segun id
-     * 
-     * @PutMapping("/E/{ID_USUARIO}") //SOLO PERMITE ACTUALIZAR ESCRIBIENDO TODOS
-     * LOS DATOS
-     * 
-     * @Operation(summary = "ENDPOINT QUE EDITA UN ESTADO DE USUARIO", description =
-     * "ENDPOINT QUE EDITA UN ESTADO DE USUARIO",
-     * requestBody=@io.swagger.v3.oas.annotations.parameters.RequestBody(
-     * description="USUARIO QUE SE VA A EDITAR", required = true, content
-     * = @Content(schema = @Schema(implementation = usuario.class))))
-     * 
-     * @Parameters (value = {
-     * 
-     * @Parameter (name="ID_USUARIO", description= "ID del usuario que se editara",
-     * in = ParameterIn.PATH, required= true)})
-     * 
-     * @ApiResponses (value = {
-     * 
-     * @ApiResponse(responseCode = "200", description =
-     * "Se edito correctamente el estado del usuario", content = @Content(mediaType
-     * = "application/json", schema = @Schema(implementation = usuario.class))),
-     * 
-     * @ApiResponse(responseCode = "500", description =
-     * "Usuario no esta registrado", content = @Content(mediaType =
-     * "application/json", schema = @Schema(type = "string", example =
-     * "No se puede registrar el usuario")))
-     * })
-     */
 
     @DeleteMapping("/{ID_USUARIO}")
+    @Operation(summary = "ENDPOINT QUE ELIMINA UN USUARIO", description = "Permite eliminar un usuario registrado mediante su ID")
+    @Parameters(value = {
+            @Parameter(name = "ID_USUARIO", description = "ID del usuario que se desea eliminar", in = ParameterIn.PATH, required = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario eliminado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Se elimina Usuario"))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Usuario no esta registrado")))
+    })
     public ResponseEntity<String> EliminarUsuario(@PathVariable Integer ID_USUARIO) {
         try {
             usuario usuarioBuscado = usuarioservices.BuscarUnUsuario(ID_USUARIO);
@@ -322,36 +305,15 @@ public class usuarioController {
         }
     }
 
-    /*
-     * @PutMapping("/{uid}")
-     * 
-     * @Operation(summary = "Actualiza los datos de un usuario por UID")
-     * public ResponseEntity<?> actualizarUsuario(@PathVariable String
-     * uid, @RequestBody usuario usuarioActualizar) {
-     * try {
-     * usuario usuarioActualizado = usuarioservices.BuscarUnUsuario(uid);
-     * usuarioActualizado.setNombre(usuarioActualizar.getNombre());
-     * usuarioActualizado.setDireccion(usuarioActualizar.getDireccion());
-     * usuarioActualizado.setCelular(usuarioActualizar.getCelular());
-     * usuarioActualizado.setEstado(usuarioActualizar.getEstado());
-     * usuarioservices.GuardarUsuario(usuarioActualizado);
-     * return ResponseEntity.ok(assembler.toModel(usuarioActualizado));
-     * } catch (Exception e) {
-     * return
-     * ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no está registrado"
-     * );
-     * }
-     * 
-     */
+
     @PatchMapping("/{ID_USUARIO}")
-    @Operation(summary = "ENDPOINT QUE EDITA PARCIALMENTE UN USUARIO", description = "PERMITE EDITAR SOLO LOS CAMPOS ENVIADOS", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "CAMPOS DEL USUARIO A EDITAR", required = true, content = @Content(schema = @Schema(implementation = usuario.class))))
+    @Operation(summary = "ENDPOINT QUE EDITA PARCIALMENTE UN USUARIO", description = "Permite editar solo los campos enviados en el cuerpo de la solicitud")
     @Parameters(value = {
-            @Parameter(name = "ID_USUARIO", description = "ID del usuario que se editara", in = ParameterIn.PATH, required = true)
+            @Parameter(name = "ID_USUARIO", description = "ID del usuario que se desea editar parcialmente", in = ParameterIn.PATH, required = true)
     })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario editado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = usuario.class))),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
-            @ApiResponse(responseCode = "403", description = "Usuario carlitos gay"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Usuario no esta registrado")))
     })
     public ResponseEntity<?> ActualizarParcialUsuario(
             @PathVariable Integer ID_USUARIO,
